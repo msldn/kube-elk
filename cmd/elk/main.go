@@ -12,19 +12,20 @@ limitations under the License.
 */
 
 // Note: the example only works with the code within the same release/branch.
-package kube_elk
+package main
 
 import (
 	"github.com/sirupsen/logrus"
-
 	"net/http"
-	logger "./httplog"
 	"k8s.io/client-go/util/homedir"
 	"flag"
 	"path/filepath"
 	"k8s.io/client-go/tools/clientcmd"
 	"k8s.io/client-go/kubernetes"
-	"./elk"
+	"github.com/marek5050/kube-elk/internal/elk"
+	"github.com/marek5050/kube-elk/internal/httplog"
+	"github.com/marek5050/kube-elk/internal/web"
+
 )
 
 var log logrus.Logger
@@ -32,10 +33,10 @@ var namespace ="default"
 var Clientset *kubernetes.Clientset
 
 func init(){
-	cfg := logger.Config{
+	cfg := httplog.Config{
 		MinLevel:       logrus.InfoLevel,
 	}
-	h := logger.NewHook(cfg, "http://org1.log.example.com/key/1233")
+	h := httplog.NewHook(cfg, "http://org1.log.example.com/key/1233")
 	logrus.SetFormatter(&logrus.JSONFormatter{})
 	logrus.SetLevel(logrus.InfoLevel)
 	logrus.AddHook(h)
@@ -68,7 +69,7 @@ func main() {
 	})
 	ctx.Info("Starting on port 8080")
 
-	router := NewRouter()
+	router := web.NewRouter()
 
 	logrus.Fatal(http.ListenAndServe(":8080", router))
 }

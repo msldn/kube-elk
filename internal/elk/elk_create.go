@@ -3,11 +3,11 @@ package elk
 import (
 	apiv1 "k8s.io/api/core/v1"
 	"encoding/json"
-	cm "../configmap"
-	deploy "../deploy"
-	svc "../service"
-	pvc "../pvc"
-	pv "../pv"
+	cm "github.com/marek5050/kube-elk/internal/configmap"
+	deploy "github.com/marek5050/kube-elk/internal/deploy"
+	svc "github.com/marek5050/kube-elk/internal/service"
+	pvc "github.com/marek5050/kube-elk/internal/pvc"
+	pv "github.com/marek5050/kube-elk/internal/pv"
 	"k8s.io/api/extensions/v1beta1"
 	log "github.com/sirupsen/logrus"
 )

@@ -3,27 +3,14 @@ package elk
 import (
 	apiv1 "k8s.io/api/core/v1"
 	"encoding/json"
-	cm "../configmap"
-	deploy "../deploy"
-	svc "../service"
-	pvc "../pvc"
-	//pv "../pv"
+	cm "github.com/marek5050/kube-elk/internal/configmap"
+	deploy "github.com/marek5050/kube-elk/internal/deploy"
+	svc "github.com/marek5050/kube-elk/internal/service"
+	pvc "github.com/marek5050/kube-elk/internal/pvc"
+	//pv "github.com/marek5050/kube-elk/internal/pv"
 	"k8s.io/api/extensions/v1beta1"
 	log "github.com/sirupsen/logrus"
 )
-
-func init (){
-	//print("init elk_Delete")
-	//cfg := httplog.Config{
-	//	MinLevel:       logrus.InfoLevel,
-	//}
-	//
-	//h := httplog.NewHook(cfg, "http://192.168.99.100:31523/key/elk_delete")
-	//log.SetFormatter(&log.JSONFormatter{})
-	//log.SetLevel(log.InfoLevel)
-	//log.AddHook(h)
-}
-
 
 func ServicesDelete(){
 	var org = Elkconfig.Org

@@ -1,8 +1,7 @@
-package kube_elk
+package web
 
 import (
 	"net/http"
-
 	"github.com/gorilla/mux"
 )
 

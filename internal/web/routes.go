@@ -1,4 +1,4 @@
-package kube_elk
+package web
 
 import "net/http"
 
@@ -17,30 +17,6 @@ var routes = Routes{
 		"GET",
 		"/",
 		Index,
-	},
-	Route{
-		"TodoIndex",
-		"GET",
-		"/todos",
-		TodoIndex,
-	},
-	Route{
-		"TodoCreate",
-		"POST",
-		"/todos",
-		TodoCreate,
-	},
-	Route{
-		"TodoShow",
-		"GET",
-		"/todos/{todoId}",
-		TodoShow,
-	},
-	Route{
-		"TodoDelete",
-		"DELETE",
-		"/todos/{todoId}",
-		TodoDelete,
 	},
 	Route{
 		"ELKDelete",
