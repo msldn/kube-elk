@@ -1,0 +1,26 @@
+{
+  "apiVersion": "v1",
+  "kind": "Service",
+  "metadata": {
+    "creationTimestamp": null,
+    "labels": {
+      "name": "logstash",
+      "org": "$ORG"
+    },
+    "name": "logstash-$ORG"
+  },
+  "spec": {
+    "type": "NodePort",
+    "ports": [
+      {
+        "name": "8080",
+        "port": 8080,
+        "nodePort": 31523
+      }
+    ],
+    "selector": {
+      "name": "logstash",
+      "org": "$ORG"
+    }
+  }
+}

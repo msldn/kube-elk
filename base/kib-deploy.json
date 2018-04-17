@@ -1,0 +1,88 @@
+{
+  "apiVersion": "extensions/v1beta1",
+  "kind": "Deployment",
+  "metadata": {
+    "creationTimestamp": null,
+    "name": "$ORG-k1",
+    "labels": {
+      "name": "kibana",
+      "org": "$ORG",
+      "instance": "k1"
+    }
+  },
+  "spec": {
+    "replicas": 1,
+    "strategy": {
+      "type": "Recreate"
+    },
+    "selector": {
+      "matchLabels": {
+        "name": "kibana",
+        "org": "$ORG",
+        "instance": "k1"
+      }
+    },
+    "template": {
+      "metadata": {
+        "creationTimestamp": null,
+        "labels": {
+          "name": "kibana",
+          "org": "$ORG",
+          "instance": "k1"
+        }
+      },
+      "spec": {
+        "containers": [
+          {
+            "image": "docker.elastic.co/kibana/kibana-oss:6.2.3",
+            "name": "kibana",
+            "env": [
+              {
+                "name": "SERVER_NAME",
+                "value": "$ORG-k1"
+              },
+              {
+                "name": "server.host",
+                "value": "0"
+              },
+              {
+                "name": "ELASTICSEARCH_URL",
+                "value": "http://elasticsearch-$ORG:9200"
+              }
+            ],
+            "ports": [
+              {
+                "containerPort": 5601
+              }
+            ],
+            "resources": {
+            },
+            "volumeMounts": [
+              {
+                "name": "config",
+                "mountPath": "/usr/share/kibana/config"
+              }
+            ]
+          }
+        ],
+        "volumes": [
+          {
+            "name": "config",
+            "configMap": {
+              "name": "$ORG-k1-config",
+              "items": [
+                {
+                  "key": "kibana.yml",
+                  "path": "kibana.yml"
+                }
+              ]
+            }
+          }
+        ],
+        "restartPolicy": "Always"
+      }
+    }
+  },
+  "status": {
+  }
+}

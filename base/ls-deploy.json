@@ -1,0 +1,89 @@
+{
+  "apiVersion": "extensions/v1beta1",
+  "kind": "Deployment",
+  "metadata": {
+    "creationTimestamp": null,
+    "name": "$ORG-ls1",
+    "labels": {
+      "name": "logstash",
+      "org": "$ORG",
+      "instance": "ls1"
+    }
+  },
+  "spec": {
+    "replicas": 1,
+    "strategy": {
+      "type": "Recreate"
+    },
+    "template": {
+      "metadata": {
+        "creationTimestamp": null,
+        "labels": {
+          "name": "logstash",
+          "org": "$ORG",
+          "instance": "ls1"
+        }
+      },
+      "spec": {
+        "containers": [
+          {
+            "env": [
+              {
+                "name": "LS_JAVA_OPTS",
+                "value": "-Xmx256m -Xms256m"
+              }
+            ],
+            "command": [
+              "/bin/sh"
+            ],
+            "args": [
+              "-c",
+              "env; ls -la /usr/share/logstash/pipeline; logstash -r -f /usr/share/logstash/pipeline/logstash.conf"
+            ],
+            "image": "docker.elastic.co/logstash/logstash-oss:6.2.3",
+            "name": "logstash",
+            "ports": [
+              {
+                "containerPort": 8080
+              }
+            ],
+            "resources": {
+            },
+            "volumeMounts": [
+              {
+                "name": "nfsvol",
+                "mountPath": "/usr/share/nfsShare"
+              },
+              {
+                "name": "config",
+                "mountPath": "/usr/share/logstash/pipeline"
+              }
+            ]
+          }
+        ],
+        "volumes": [
+          {
+            "name": "nfsvol",
+            "persistentVolumeClaim": {
+              "claimName": "nfs-claim1-$ORG"
+            }
+          },
+          {
+            "name": "config",
+            "configMap": {
+              "name": "$ORG-ls1-config",
+              "items": [
+                {
+                  "key": "logstash.conf",
+                  "path": "logstash.conf"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  },
+  "status": {
+  }
+}
