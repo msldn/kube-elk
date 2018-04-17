@@ -15,9 +15,6 @@ limitations under the License.
 package main
 
 import (
-	"flag"
-	"fmt"
-	"os"
 	"path/filepath"
 
 	//appsv1 "k8s.io/api/apps/v1"
@@ -34,48 +31,31 @@ import (
 	// _ "k8s.io/client-go/plugin/pkg/client/auth/gcp"
 	//"k8s.io/apimachinery/pkg/util/intstr"
 	//corev1 "k8s.io/api/core/v1"
-	"io/ioutil"
 	"encoding/json"
 	"k8s.io/api/extensions/v1beta1"
-	"bytes"
 	"testing"
-	cm "./configmap"
-	deploy "./deploy"
-	svc  "./service"
-	pvc "./pvc"
-	pv "./pv"
-	elk "./elk"
+	cm "github.com/marek5050/kube-elk/internal/configmap"
+	deploy "github.com/marek5050/kube-elk/internal/deploy"
+	svc  "github.com/marek5050/kube-elk/internal/service"
+	pvc "github.com/marek5050/kube-elk/internal/pvc"
+	pv "github.com/marek5050/kube-elk/internal/pv"
+	"github.com/marek5050/kube-elk/internal/elk"
+	"os"
 )
-
-
-func getJSON(name string) []byte {
-	raw, err := ioutil.ReadFile(name)
-	if err != nil {
-		fmt.Println(err.Error())
-		os.Exit(1)
-	}
-	return raw
-}
-
-func getListJSON(version, kind string, items ...[]byte) []byte {
-	json := fmt.Sprintf(`{"apiVersion": %q, "kind": %q, "items": [%s]}`,
-		version, kind, bytes.Join(items, []byte(",")))
-	return []byte(json)
-}
 
 var  clientset *kubernetes.Clientset
 
 func init() {
-	var kubeconfig *string
+	var kubeconfig string
 	if home := homedir.HomeDir(); home != "" {
-		kubeconfig = flag.String("kubeconfig", filepath.Join(home, ".kube", "config"), "(optional) absolute path to the kubeconfig file")
-	} else {
-		kubeconfig = flag.String("kubeconfig", "", "absolute path to the kubeconfig file")
+		kubeconfig = filepath.Join(home, ".kube", "config")
+	}else{
+		os.Exit(1)
 	}
 
 	//flag.Parse()
 
-	config, err := clientcmd.BuildConfigFromFlags("", *kubeconfig)
+	config, err := clientcmd.BuildConfigFromFlags("", kubeconfig)
 	if err != nil {
 	panic(err)
 	}
@@ -87,7 +67,7 @@ func init() {
 }
 
 //func TestCreateConfigMap(t *testing.T) {
-//	raw, err := ioutil.ReadFile("./base/kib-config.json")
+//	raw, err := ioutil.ReadFile("github.com/marek5050/kube-elk/internal/base/kib-config.json", "testorg")
 //	if err != nil {
 //		fmt.Println(err.Error())
 //		os.Exit(1)
@@ -106,7 +86,7 @@ func init() {
 var err error
 
 func TestCreateConfigMaps(t *testing.T) {
-	raw := getJSON("./base/kib-config.json")
+	raw := elk.GetConfig("github.com/marek5050/kube-elk/base/kib-config.json", "testorg")
 
 	var item =  &apiv1.ConfigMap{}
 	json.Unmarshal(raw, &item)
@@ -117,7 +97,7 @@ func TestCreateConfigMaps(t *testing.T) {
 		t.Fatal("Failed to create Kibana ConfigMap")
 	}
 
-	raw = getJSON("./base/ls-config.json")
+	raw = elk.GetConfig("github.com/marek5050/kube-elk/base/ls-config.json", "testorg")
 
 	item =  &apiv1.ConfigMap{}
 	json.Unmarshal(raw, &item)
@@ -130,7 +110,7 @@ func TestCreateConfigMaps(t *testing.T) {
 }
 
 //func TestCreateDeploy(t *testing.T) {
-//	raw, err := ioutil.ReadFile("./base/kib-deploy.json")
+//	raw, err := ioutil.ReadFile("github.com/marek5050/kube-elk/internal/base/kib-deploy.json", "testorg")
 //	if err != nil {
 //		fmt.Println(err.Error())
 //	}
@@ -146,7 +126,7 @@ func TestCreateConfigMaps(t *testing.T) {
 //}
 
 func TestCreateDeployments(t *testing.T) {
-	raw := getJSON("./base/kib-deploy.json")
+	raw := elk.GetConfig("github.com/marek5050/kube-elk/base/kib-deploy.json", "testorg")
 
 	var item =  &v1beta1.Deployment{}
 	json.Unmarshal(raw, &item)
@@ -155,7 +135,7 @@ func TestCreateDeployments(t *testing.T) {
 		t.Errorf("Failed to create Kibana Deployment")
 	}
 
-	raw = getJSON("./base/es-deploy.json")
+	raw = elk.GetConfig("github.com/marek5050/kube-elk/base/es-deploy.json", "testorg")
 
 	item =  &v1beta1.Deployment{}
 	json.Unmarshal(raw, &item)
@@ -164,7 +144,7 @@ func TestCreateDeployments(t *testing.T) {
 		t.Errorf("Failed to create Elasticsearch Deployment")
 	}
 
-	raw = getJSON("./base/ls-deploy.json")
+	raw = elk.GetConfig("github.com/marek5050/kube-elk/base/ls-deploy.json", "testorg")
 
 	item =  &v1beta1.Deployment{}
 	json.Unmarshal(raw, &item)
@@ -175,7 +155,7 @@ func TestCreateDeployments(t *testing.T) {
 }
 
 //func TestCreateService(t *testing.T) {
-//	raw, err := ioutil.ReadFile("./base/kib-service.json")
+//	raw, err := ioutil.ReadFile("github.com/marek5050/kube-elk/internal/base/kib-service.json", "testorg")
 //	if err != nil {
 //		fmt.Println(err.Error())
 //		os.Exit(1)
@@ -194,7 +174,7 @@ func TestCreateDeployments(t *testing.T) {
 
 
 func TestCreateServices(t *testing.T) {
-	raw := getJSON("./base/kib-service.json")
+	raw := elk.GetConfig("github.com/marek5050/kube-elk/base/kib-service.json", "testorg")
 
 	var _svc =  &apiv1.Service{}
 	json.Unmarshal(raw, &_svc)
@@ -205,7 +185,7 @@ func TestCreateServices(t *testing.T) {
 		t.Fatal("Failed to create Kibana Service")
 	}
 
-	raw=getJSON("./base/es-service.json")
+	raw=elk.GetConfig("github.com/marek5050/kube-elk/base/es-service.json", "testorg")
 
 	_svc =  &apiv1.Service{}
 	json.Unmarshal(raw, &_svc)
@@ -216,7 +196,7 @@ func TestCreateServices(t *testing.T) {
 		t.Fatal("Failed to create Elasticsearch Service")
 	}
 
-	raw=getJSON("./base/ls-service.json")
+	raw=elk.GetConfig("github.com/marek5050/kube-elk/base/ls-service.json", "testorg")
 
 	_svc =  &apiv1.Service{}
 	json.Unmarshal(raw, &_svc)
@@ -229,31 +209,31 @@ func TestCreateServices(t *testing.T) {
 }
 
 func TestDeleteServices(t *testing.T) {
-	raw := getJSON("./base/kib-service.json")
+	raw := elk.GetConfig("github.com/marek5050/kube-elk/base/kib-service.json", "testorg")
 
 	var _svc =  &apiv1.Service{}
 	json.Unmarshal(raw, &_svc)
-	err = svc.ServiceDelete(clientset,"default", _svc)
+	err = svc.ServiceDelete(clientset,"default", _svc.Name)
 
 	if err != nil {
 		t.Fatal("Failed to create Kibana Service")
 	}
 
-	raw = getJSON("./base/es-service.json")
+	raw = elk.GetConfig("github.com/marek5050/kube-elk/base/es-service.json", "testorg")
 
 	_svc =  &apiv1.Service{}
 	json.Unmarshal(raw, &_svc)
-	err = svc.ServiceDelete(clientset,"default", _svc)
+	err = svc.ServiceDelete(clientset,"default", _svc.Name)
 
 	if err != nil {
 		t.Fatal("Failed to create Elasticsearch Service")
 	}
 
-	raw = getJSON("./base/ls-service.json")
+	raw = elk.GetConfig("github.com/marek5050/kube-elk/base/ls-service.json", "testorg")
 
 	_svc =  &apiv1.Service{}
 	json.Unmarshal(raw, &_svc)
-	err = svc.ServiceDelete(clientset,"default", _svc)
+	err = svc.ServiceDelete(clientset,"default", _svc.Name)
 
 	if err != nil {
 		t.Fatal("Failed to create Logstash Service")
@@ -262,45 +242,55 @@ func TestDeleteServices(t *testing.T) {
 
 func TestElkDelete(t *testing.T) {
 	elk.Clientset = clientset
-	elk.ElkDelete("default","0")
+	//elk.ElkDelete("default","0")
 }
-
-func TestDeletePVC(t *testing.T) {
-	raw:=getJSON("./base/pvclaim.json")
-
-	var svc =  &apiv1.PersistentVolumeClaim{}
-	json.Unmarshal(raw, &svc)
-	err = pvc.PVCDelete(clientset,"default", svc)
-
-	if err != nil {
-		t.Fatal("Failed to delete PVClaim")
-	}
-
-	raw= getJSON("./base/pvstore.json")
-
-	var _pv =  &apiv1.PersistentVolume{}
-	json.Unmarshal(raw, &_pv)
-	err = pv.PVDelete(clientset, _pv)
-
-	if err != nil {
-		t.Fatal("Failed to delete PV")
-	}
-}
+//
+//func TestDeletePVC(t *testing.T) {
+//	raw:=elk.GetConfig("github.com/marek5050/kube-elk/base/pvclaim.json", "testorg")
+//
+//	var svc =  &apiv1.PersistentVolumeClaim{}
+//	json.Unmarshal(raw, &svc)
+//	err = pvc.PVCDelete(clientset,"default", svc.Name)
+//
+//	if err != nil {
+//		t.Fatal("Failed to delete PVClaim")
+//	}
+//
+//	raw= elk.GetConfig("github.com/marek5050/kube-elk/base/pvstore.json", "testorg")
+//
+//	var _pv =  &apiv1.PersistentVolume{}
+//	json.Unmarshal(raw, &_pv)
+//	err = pv.PVDelete(clientset, _pv.Name)
+//
+//	if err != nil {
+//		t.Fatal("Failed to delete PV")
+//	}
+//}
 
 func TestCreatePersistentVolume(t *testing.T) {
-	raw:=getJSON("./base/pvstore.json")
-
-	var item =  &apiv1.PersistentVolume{}
-	json.Unmarshal(raw, &item)
-	_,err = pv.PVCreate(clientset, item)
-
-	if err != nil {
-		t.Fatal("Failed to create PVolume")
-	}
+	//raw:=elk.GetConfig("github.com/marek5050/kube-elk/base/pvstore.json", "testorg")
+	//
+	//var item =  &apiv1.PersistentVolume{}
+	//json.Unmarshal(raw, &item)
+	//_,err = pv.PVCreate(clientset, item)
+	//
+	//if err != nil {
+	//	t.Fatal("Failed to create PVolume")
+	//}
 }
 
-func TestCreatePersistentVolumeClaim(t *testing.T) {
-	raw:=getJSON("./base/pvclaim.json")
+func TestPersistentVolumeClaim(t *testing.T) {
+	rawPV:=elk.GetConfig("../../base/pvstore.json", "testorg")
+
+	var pervol =  &apiv1.PersistentVolume{}
+	json.Unmarshal(rawPV, &pervol)
+	_,err = pv.PVCreate(clientset, pervol)
+
+	if err != nil {
+		t.Fatal("Failed to create PVolume: %s", err)
+	}
+
+	raw:=elk.GetConfig("../../base/pvclaim-data.json", "testorg")
 
 	var item =  &apiv1.PersistentVolumeClaim{}
 	json.Unmarshal(raw, &item)
@@ -308,5 +298,15 @@ func TestCreatePersistentVolumeClaim(t *testing.T) {
 
 	if err != nil {
 		t.Fatal("Failed to create PVolumeClaim")
+	}
+
+	err = pvc.PVCDelete(clientset,"default", item.Name)
+	if err != nil {
+		t.Fatal("Failed to delete PV")
+	}
+
+	err = pv.PVDelete(clientset, pervol.Name)
+	if err != nil {
+		t.Fatal("Failed to Delete PVolume")
 	}
 }
