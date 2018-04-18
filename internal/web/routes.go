@@ -40,9 +40,9 @@ var routes = Routes{
 		"GET",
 		"/elk/{OrgId}/service",
 		ElkServiceList,
-	},Route{
+	}, Route{
 		"ElkDeployList",
 		"GET",
 		"/elk/{OrgId}/deploy",
 		ElkDeployList,
-	},}
+	}}

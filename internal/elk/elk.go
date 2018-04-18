@@ -1,9 +1,9 @@
 package elk
 
 import (
-	"k8s.io/client-go/kubernetes"
-	"io/ioutil"
 	"fmt"
+	"io/ioutil"
+	"k8s.io/client-go/kubernetes"
 	"os"
 	"strings"
 )
@@ -13,7 +13,7 @@ var OrgId = "ORG"
 
 var Clientset *kubernetes.Clientset
 
-func init(){
+func init() {
 	print("init elk")
 }
 
@@ -32,14 +32,13 @@ func GetConfig(name, org string) []byte {
 		fmt.Println(err.Error())
 		os.Exit(1)
 	}
-	ret := []byte(strings.Replace(string(raw), "$ORG",org, -1))
+	ret := []byte(strings.Replace(string(raw), "$ORG", org, -1))
 
 	return ret
 }
 
-
-type ElkConfig struct{
-	Org string
+type ElkConfig struct {
+	Org   string
 	Kib_p int32
-	Ls_p int32
+	Ls_p  int32
 }

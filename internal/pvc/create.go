@@ -1,9 +1,9 @@
 package pvc
 
 import (
-	"k8s.io/client-go/kubernetes"
-	"k8s.io/apimachinery/pkg/api/errors"
 	apiv1 "k8s.io/api/core/v1"
+	"k8s.io/apimachinery/pkg/api/errors"
+	"k8s.io/client-go/kubernetes"
 )
 
 func PVCCreate(client *kubernetes.Clientset, namespace string, new *apiv1.PersistentVolumeClaim) (*apiv1.PersistentVolumeClaim, error) {
@@ -15,4 +15,3 @@ func PVCCreate(client *kubernetes.Clientset, namespace string, new *apiv1.Persis
 
 	return svc, err
 }
-

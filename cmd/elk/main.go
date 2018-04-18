@@ -15,26 +15,25 @@ limitations under the License.
 package main
 
 import (
-	"github.com/sirupsen/logrus"
-	"net/http"
-	"k8s.io/client-go/util/homedir"
 	"flag"
-	"path/filepath"
-	"k8s.io/client-go/tools/clientcmd"
-	"k8s.io/client-go/kubernetes"
 	"github.com/marek5050/kube-elk/internal/elk"
 	"github.com/marek5050/kube-elk/internal/httplog"
 	"github.com/marek5050/kube-elk/internal/web"
-
+	"github.com/sirupsen/logrus"
+	"k8s.io/client-go/kubernetes"
+	"k8s.io/client-go/tools/clientcmd"
+	"k8s.io/client-go/util/homedir"
+	"net/http"
+	"path/filepath"
 )
 
 var log logrus.Logger
-var namespace ="default"
+var namespace = "default"
 var Clientset *kubernetes.Clientset
 
-func init(){
+func init() {
 	cfg := httplog.Config{
-		MinLevel:       logrus.InfoLevel,
+		MinLevel: logrus.InfoLevel,
 	}
 	h := httplog.NewHook(cfg, "http://org1.log.example.com/key/1233")
 	logrus.SetFormatter(&logrus.JSONFormatter{})
@@ -60,7 +59,6 @@ func init(){
 
 	elk.Clientset = Clientset
 }
-
 
 func main() {
 

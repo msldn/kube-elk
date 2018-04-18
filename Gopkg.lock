@@ -63,6 +63,18 @@
   version = "v1.6.1"
 
 [[projects]]
+  branch = "master"
+  name = "github.com/howeyc/gopass"
+  packages = ["."]
+  revision = "bf9dde6d0d2c004a008c27aaee91170c786f6db8"
+
+[[projects]]
+  name = "github.com/imdario/mergo"
+  packages = ["."]
+  revision = "9d5f1277e9a8ed20c3684bda8fde67c05628518c"
+  version = "v0.3.4"
+
+[[projects]]
   name = "github.com/json-iterator/go"
   packages = ["."]
   revision = "ca39e5af3ece67bbcda3d0f4f56a8e24d9f2dad4"
@@ -276,12 +288,17 @@
     "plugin/pkg/client/auth/exec",
     "rest",
     "rest/watch",
+    "tools/auth",
+    "tools/clientcmd",
     "tools/clientcmd/api",
+    "tools/clientcmd/api/latest",
+    "tools/clientcmd/api/v1",
     "tools/metrics",
     "tools/reference",
     "transport",
     "util/cert",
     "util/flowcontrol",
+    "util/homedir",
     "util/integer"
   ]
   revision = "23781f4d6632d88e869066eaebb743857aa1ef9b"
@@ -290,6 +307,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "dc4ae92a91a9941fd9929e3948d11b30cf4e13367ae972b1bdb4c0c3d054b60a"
+  inputs-digest = "fee4956fdef1ddab736cf1e3f9b750b400e7366a37c8f8da0de737b3c7670518"
   solver-name = "gps-cdcl"
   solver-version = 1

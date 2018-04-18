@@ -32,24 +32,24 @@ import (
 	//"k8s.io/apimachinery/pkg/util/intstr"
 	//corev1 "k8s.io/api/core/v1"
 	"encoding/json"
-	"k8s.io/api/extensions/v1beta1"
-	"testing"
 	cm "github.com/marek5050/kube-elk/internal/configmap"
 	deploy "github.com/marek5050/kube-elk/internal/deploy"
-	svc  "github.com/marek5050/kube-elk/internal/service"
-	pvc "github.com/marek5050/kube-elk/internal/pvc"
-	pv "github.com/marek5050/kube-elk/internal/pv"
 	"github.com/marek5050/kube-elk/internal/elk"
+	pv "github.com/marek5050/kube-elk/internal/pv"
+	pvc "github.com/marek5050/kube-elk/internal/pvc"
+	svc "github.com/marek5050/kube-elk/internal/service"
+	"k8s.io/api/extensions/v1beta1"
 	"os"
+	"testing"
 )
 
-var  clientset *kubernetes.Clientset
+var clientset *kubernetes.Clientset
 
 func init() {
 	var kubeconfig string
 	if home := homedir.HomeDir(); home != "" {
 		kubeconfig = filepath.Join(home, ".kube", "config")
-	}else{
+	} else {
 		os.Exit(1)
 	}
 
@@ -57,12 +57,12 @@ func init() {
 
 	config, err := clientcmd.BuildConfigFromFlags("", kubeconfig)
 	if err != nil {
-	panic(err)
+		panic(err)
 	}
 	clientset, err = kubernetes.NewForConfig(config)
 	if err != nil {
-	panic(err)
-}
+		panic(err)
+	}
 
 }
 
@@ -88,9 +88,9 @@ var err error
 func TestCreateConfigMaps(t *testing.T) {
 	raw := elk.GetConfig("github.com/marek5050/kube-elk/base/kib-config.json", "testorg")
 
-	var item =  &apiv1.ConfigMap{}
+	var item = &apiv1.ConfigMap{}
 	json.Unmarshal(raw, &item)
-	_,err = cm.ConfigMapCreate(clientset,"default", item)
+	_, err = cm.ConfigMapCreate(clientset, "default", item)
 
 	if err != nil {
 		print(err)
@@ -99,9 +99,9 @@ func TestCreateConfigMaps(t *testing.T) {
 
 	raw = elk.GetConfig("github.com/marek5050/kube-elk/base/ls-config.json", "testorg")
 
-	item =  &apiv1.ConfigMap{}
+	item = &apiv1.ConfigMap{}
 	json.Unmarshal(raw, &item)
-	_,err = cm.ConfigMapCreate(clientset,"default", item)
+	_, err = cm.ConfigMapCreate(clientset, "default", item)
 
 	if err != nil {
 		print(err)
@@ -128,27 +128,27 @@ func TestCreateConfigMaps(t *testing.T) {
 func TestCreateDeployments(t *testing.T) {
 	raw := elk.GetConfig("github.com/marek5050/kube-elk/base/kib-deploy.json", "testorg")
 
-	var item =  &v1beta1.Deployment{}
+	var item = &v1beta1.Deployment{}
 	json.Unmarshal(raw, &item)
-	_, err = deploy.DeploymentCreate(clientset,"default", item)
+	_, err = deploy.DeploymentCreate(clientset, "default", item)
 	if err != nil {
 		t.Errorf("Failed to create Kibana Deployment")
 	}
 
 	raw = elk.GetConfig("github.com/marek5050/kube-elk/base/es-deploy.json", "testorg")
 
-	item =  &v1beta1.Deployment{}
+	item = &v1beta1.Deployment{}
 	json.Unmarshal(raw, &item)
-	_, err = deploy.DeploymentCreate(clientset,"default", item)
+	_, err = deploy.DeploymentCreate(clientset, "default", item)
 	if err != nil {
 		t.Errorf("Failed to create Elasticsearch Deployment")
 	}
 
 	raw = elk.GetConfig("github.com/marek5050/kube-elk/base/ls-deploy.json", "testorg")
 
-	item =  &v1beta1.Deployment{}
+	item = &v1beta1.Deployment{}
 	json.Unmarshal(raw, &item)
-	_, err = deploy.DeploymentCreate(clientset,"default", item)
+	_, err = deploy.DeploymentCreate(clientset, "default", item)
 	if err != nil {
 		t.Errorf("Failed to create Logstash Deployment")
 	}
@@ -172,35 +172,34 @@ func TestCreateDeployments(t *testing.T) {
 //	}
 //}
 
-
 func TestCreateServices(t *testing.T) {
 	raw := elk.GetConfig("github.com/marek5050/kube-elk/base/kib-service.json", "testorg")
 
-	var _svc =  &apiv1.Service{}
+	var _svc = &apiv1.Service{}
 	json.Unmarshal(raw, &_svc)
-	_,err = svc.ServiceCreate(clientset,"default", _svc)
+	_, err = svc.ServiceCreate(clientset, "default", _svc)
 
 	if err != nil {
 		print(err)
 		t.Fatal("Failed to create Kibana Service")
 	}
 
-	raw=elk.GetConfig("github.com/marek5050/kube-elk/base/es-service.json", "testorg")
+	raw = elk.GetConfig("github.com/marek5050/kube-elk/base/es-service.json", "testorg")
 
-	_svc =  &apiv1.Service{}
+	_svc = &apiv1.Service{}
 	json.Unmarshal(raw, &_svc)
-	_,err = svc.ServiceCreate(clientset,"default", _svc)
+	_, err = svc.ServiceCreate(clientset, "default", _svc)
 
 	if err != nil {
 		print(err)
 		t.Fatal("Failed to create Elasticsearch Service")
 	}
 
-	raw=elk.GetConfig("github.com/marek5050/kube-elk/base/ls-service.json", "testorg")
+	raw = elk.GetConfig("github.com/marek5050/kube-elk/base/ls-service.json", "testorg")
 
-	_svc =  &apiv1.Service{}
+	_svc = &apiv1.Service{}
 	json.Unmarshal(raw, &_svc)
-	_,err = svc.ServiceCreate(clientset,"default", _svc)
+	_, err = svc.ServiceCreate(clientset, "default", _svc)
 
 	if err != nil {
 		print(err)
@@ -211,9 +210,9 @@ func TestCreateServices(t *testing.T) {
 func TestDeleteServices(t *testing.T) {
 	raw := elk.GetConfig("github.com/marek5050/kube-elk/base/kib-service.json", "testorg")
 
-	var _svc =  &apiv1.Service{}
+	var _svc = &apiv1.Service{}
 	json.Unmarshal(raw, &_svc)
-	err = svc.ServiceDelete(clientset,"default", _svc.Name)
+	err = svc.ServiceDelete(clientset, "default", _svc.Name)
 
 	if err != nil {
 		t.Fatal("Failed to create Kibana Service")
@@ -221,9 +220,9 @@ func TestDeleteServices(t *testing.T) {
 
 	raw = elk.GetConfig("github.com/marek5050/kube-elk/base/es-service.json", "testorg")
 
-	_svc =  &apiv1.Service{}
+	_svc = &apiv1.Service{}
 	json.Unmarshal(raw, &_svc)
-	err = svc.ServiceDelete(clientset,"default", _svc.Name)
+	err = svc.ServiceDelete(clientset, "default", _svc.Name)
 
 	if err != nil {
 		t.Fatal("Failed to create Elasticsearch Service")
@@ -231,9 +230,9 @@ func TestDeleteServices(t *testing.T) {
 
 	raw = elk.GetConfig("github.com/marek5050/kube-elk/base/ls-service.json", "testorg")
 
-	_svc =  &apiv1.Service{}
+	_svc = &apiv1.Service{}
 	json.Unmarshal(raw, &_svc)
-	err = svc.ServiceDelete(clientset,"default", _svc.Name)
+	err = svc.ServiceDelete(clientset, "default", _svc.Name)
 
 	if err != nil {
 		t.Fatal("Failed to create Logstash Service")
@@ -244,6 +243,7 @@ func TestElkDelete(t *testing.T) {
 	elk.Clientset = clientset
 	//elk.ElkDelete("default","0")
 }
+
 //
 //func TestDeletePVC(t *testing.T) {
 //	raw:=elk.GetConfig("github.com/marek5050/kube-elk/base/pvclaim.json", "testorg")
@@ -280,27 +280,27 @@ func TestCreatePersistentVolume(t *testing.T) {
 }
 
 func TestPersistentVolumeClaim(t *testing.T) {
-	rawPV:=elk.GetConfig("../../base/pvstore.json", "testorg")
+	rawPV := elk.GetConfig("../../base/pvstore.json", "testorg")
 
-	var pervol =  &apiv1.PersistentVolume{}
+	var pervol = &apiv1.PersistentVolume{}
 	json.Unmarshal(rawPV, &pervol)
-	_,err = pv.PVCreate(clientset, pervol)
+	_, err = pv.PVCreate(clientset, pervol)
 
 	if err != nil {
-		t.Fatal("Failed to create PVolume: %s", err)
+		t.Fatalf("Failed to create PVolume: %s", err)
 	}
 
-	raw:=elk.GetConfig("../../base/pvclaim-data.json", "testorg")
+	raw := elk.GetConfig("../../base/pvclaim-data.json", "testorg")
 
-	var item =  &apiv1.PersistentVolumeClaim{}
+	var item = &apiv1.PersistentVolumeClaim{}
 	json.Unmarshal(raw, &item)
-	_,err = pvc.PVCCreate(clientset,"default", item)
+	_, err = pvc.PVCCreate(clientset, "default", item)
 
 	if err != nil {
 		t.Fatal("Failed to create PVolumeClaim")
 	}
 
-	err = pvc.PVCDelete(clientset,"default", item.Name)
+	err = pvc.PVCDelete(clientset, "default", item.Name)
 	if err != nil {
 		t.Fatal("Failed to delete PV")
 	}

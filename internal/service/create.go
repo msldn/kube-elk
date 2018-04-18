@@ -1,9 +1,9 @@
 package service
 
 import (
-	"k8s.io/client-go/kubernetes"
-	"k8s.io/apimachinery/pkg/api/errors"
 	apiv1 "k8s.io/api/core/v1"
+	"k8s.io/apimachinery/pkg/api/errors"
+	"k8s.io/client-go/kubernetes"
 )
 
 // DeploymentCreate is a wrapper which will attempt to create and/or up a deployment.

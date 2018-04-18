@@ -46,13 +46,12 @@ type Config struct {
 	// Burst sets the burst limit.
 	// Ignored if Limit is zero.
 	Burst int
-
 }
 
 // Hook is a logrus hook that sends messages to Slack.
 type Hook struct {
 	Config
-	client  Client
+	client Client
 }
 
 // SetConfigDefaults sets defaults on the configuration if needed to ensure the cfg is valid.
@@ -98,6 +97,6 @@ func (sh *Hook) Levels() []logrus.Level {
 // Fire implements logrus.Hook.
 // It sends a slack message for the log entry e.
 func (sh *Hook) Fire(e *logrus.Entry) error {
-	err := sh.client.Send(e.Message,nil)
+	err := sh.client.Send(e.Message, nil)
 	return err
 }

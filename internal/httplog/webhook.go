@@ -5,9 +5,9 @@ package httplog
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"net/http"
-	"fmt"
 )
 
 // Client is a slack webhook client for posting messages using a webhook URL.
