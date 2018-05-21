@@ -51,6 +51,10 @@
             },
             "volumeMounts": [
               {
+                "name": "nfsvol",
+                "mountPath": "/usr/share/nfsShare"
+              },
+              {
                 "name": "config",
                 "mountPath": "/usr/share/logstash/pipeline"
               }
@@ -58,6 +62,12 @@
           }
         ],
         "volumes": [
+          {
+            "name": "nfsvol",
+            "persistentVolumeClaim": {
+              "claimName": "nfs-claim1-$ORG"
+            }
+          },
           {
             "name": "config",
             "configMap": {

@@ -8,6 +8,7 @@ import (
 	svc "github.com/marek5050/kube-elk/internal/service"
 	apiv1 "k8s.io/api/core/v1"
 	//pv "github.com/marek5050/kube-elk/internal/pv"
+	"fmt"
 	log "github.com/sirupsen/logrus"
 	"k8s.io/api/extensions/v1beta1"
 )
@@ -167,14 +168,27 @@ func PVCGet() {
 
 }
 
-func ElkGet(_namespace string, elkconfig *ElkConfig) error {
+func ElkGet(_namespace string, elconf *ElkConfig) (*Elk, error) {
 	namespace = _namespace
-	Elkconfig = elkconfig
+	Elkconfig = elconf
+	var elkRoot = newElk(Elkconfig.Org)
+	svcs, _ := ServicesList()
+	deploys, _ := DeployList()
+	elkRoot.KibanaUrl = "http://localhost"
+	elkRoot.LogUrl = "http://localhost"
 
-	ServicesGet()
-	DeploymentGet()
-	ConfigMapGet()
-	PVCGet()
+	for item := range svcs.Items {
+		var port = svcs.Items[item].Spec.Ports[0].Name
 
-	return nil
+		if port == "5601" {
+			elkRoot.KibanaUrl += fmt.Sprintf(":%d", svcs.Items[item].Spec.Ports[0].NodePort)
+		} else if port == "8080" {
+			elkRoot.LogUrl += fmt.Sprintf(":%d", svcs.Items[item].Spec.Ports[0].NodePort)
+		}
+	}
+
+	elkRoot.SetServices(svcs)
+	elkRoot.SetDeploy(deploys)
+
+	return elkRoot, nil
 }

@@ -75,21 +75,10 @@ func ElkGet(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 
 	var elkconfig = &elk.ElkConfig{
-		Ls_p:  31533,
-		Kib_p: 31535,
-		Org:   vars["OrgId"],
-	}
-	body, err := ioutil.ReadAll(r.Body)
-	if err != nil {
-		w.Header().Set("Content-Type", "application/json; charset=UTF-8")
-		w.WriteHeader(http.StatusBadRequest)
-		if err := json.NewEncoder(w).Encode(jsonErr{Code: http.StatusNotFound, Text: "Wrong Format"}); err != nil {
-			panic(err)
-		}
+		Org: vars["OrgId"],
 	}
 
-	json.Unmarshal(body, elkconfig)
-	err = elk.ElkGet("default", elkconfig)
+	elk, err := elk.ElkGet("default", elkconfig)
 
 	if err != nil {
 		w.Header().Set("Content-Type", "application/json; charset=UTF-8")
@@ -101,6 +90,14 @@ func ElkGet(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusOK)
+
+	_body, err := json.Marshal(elk)
+
+	if err != nil {
+		logrus.Errorf("Failed to ElkGet ", err)
+	}
+
+	w.Write(_body)
 	return
 }
 

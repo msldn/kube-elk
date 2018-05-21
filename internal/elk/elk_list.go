@@ -30,7 +30,6 @@ func DeployList() (*v1beta1.DeploymentList, error) {
 	} else {
 		log.Info("List:Deploy: %s", items)
 	}
-
 	return items, err
 }
 
