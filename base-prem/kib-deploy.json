@@ -34,7 +34,7 @@
       "spec": {
         "containers": [
           {
-            "image": "docker.elastic.co/kibana/kibana-oss:6.2.4",
+            "image": "docker.elastic.co/kibana/kibana:6.2.4",
             "name": "kibana",
             "env": [
               {
