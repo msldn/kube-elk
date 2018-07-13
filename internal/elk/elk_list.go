@@ -13,7 +13,7 @@ import (
 )
 
 func ServicesList(elkconfig *ElkConfig) (*apiv1.ServiceList, error) {
-	items, err := svc.ServiceList(Clientset, elkconfig.Org, Elkconfig.Org)
+	items, err := svc.ServiceList(Clientset, elkconfig.Org, elkconfig.Org)
 	if err != nil {
 		log.Info("Failed to retrieve Services List %s", err)
 	} else {
@@ -24,7 +24,7 @@ func ServicesList(elkconfig *ElkConfig) (*apiv1.ServiceList, error) {
 }
 
 func DeployList(elkconfig *ElkConfig) (*v1beta1.DeploymentList, error) {
-	items, err := deploy.DeploymentList(Clientset, elkconfig.Org, Elkconfig.Org)
+	items, err := deploy.DeploymentList(Clientset, elkconfig.Org, elkconfig.Org)
 	if err != nil {
 		log.Info("Failed to retrieve Deploy List %s", err)
 	} else {
@@ -34,7 +34,6 @@ func DeployList(elkconfig *ElkConfig) (*v1beta1.DeploymentList, error) {
 }
 
 func ElkServiceList(elkconfig *ElkConfig) (*apiv1.ServiceList, error) {
-	Elkconfig = elkconfig
 	sl, err := ServicesList(elkconfig)
 	if err != nil {
 		print(sl)
@@ -44,7 +43,6 @@ func ElkServiceList(elkconfig *ElkConfig) (*apiv1.ServiceList, error) {
 }
 
 func ElkDeployList(elkconfig *ElkConfig) (*v1beta1.DeploymentList, error) {
-	Elkconfig = elkconfig
 	items, err := DeployList(elkconfig)
 	if err != nil {
 		print(items)

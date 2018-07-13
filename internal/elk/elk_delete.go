@@ -16,7 +16,7 @@ import (
 )
 
 func ServicesDelete(elkconfig *ElkConfig ) {
-	var org = Elkconfig.Org
+	var org = elkconfig.Org
 	raw := GetConfig("./base/kib-service.json", org)
 
 	var _svc = &apiv1.Service{}
@@ -55,7 +55,7 @@ func ServicesDelete(elkconfig *ElkConfig ) {
 }
 
 func DeploymentDelete(elkconfig *ElkConfig) {
-	var org = Elkconfig.Org
+	var org = elkconfig.Org
 
 	raw := GetConfig("./base/kib-deploy.json", org)
 
@@ -95,7 +95,7 @@ func DeploymentDelete(elkconfig *ElkConfig) {
 }
 
 func ConfigMapDelete(elkconfig *ElkConfig) {
-	var org = Elkconfig.Org
+	var org = elkconfig.Org
 
 	raw := GetConfig("./base/kib-config.json", org)
 
@@ -131,14 +131,14 @@ func NamespaceDelete(elkconfig *ElkConfig) {
 	err := ns.NamespaceDelete(Clientset, org)
 
 	if err != nil {
-		log.Errorf("failed to delete Namespace: %d", org )
+		log.Errorf("failed to delete Namespace: %s", org )
 	} else {
 		log.Info("Deploy: Delete: LS")
 	}
 }
 
 func PVCDelete(elkconfig *ElkConfig) {
-	var org = Elkconfig.Org
+	var org = elkconfig.Org
 
 	raw := GetConfig("./base/pvclaim-data.json", org)
 
@@ -193,9 +193,9 @@ func IngressDelete(elkconfig *ElkConfig) {
 	err = ingress.IngressDelete(Clientset,org,_pv.Name)
 
 	if err != nil {
-		log.Error("failed: IngressCreate")
+		log.Error("failed: IngressDelete")
 	} else {
-		log.Info("Ingress: Create")
+		log.Info("Ingress: Delete")
 	}
 }
 
@@ -210,9 +210,9 @@ func UserDelete(elkconfig *ElkConfig) {
 	err = secret.SecretDelete(Clientset,org, _pv.Name)
 
 	if err != nil {
-		log.Error("failed: UserCreate")
+		log.Error("failed: UserDelete")
 	} else {
-		log.Info("User: Create")
+		log.Info("User: Delete")
 	}
 }
 

@@ -2,8 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="10810dcc-684c-4d34-9a1c-7485a13bdeb6" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/base/kib-deploy.json" beforeDir="false" afterPath="$PROJECT_DIR$/base/kib-deploy.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/elk/elk.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/elk/elk.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/elk/elk_create.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/elk/elk_create.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/elk/elk_delete.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/elk/elk_delete.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/elk/elk_get.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/elk/elk_get.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/elk/elk_list.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/elk/elk_list.go" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.idea/httpRequests/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -26,7 +30,7 @@
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="Go" value="1438" />
+          <entry key="Go" value="1479" />
           <entry key="JSON" value="427" />
           <entry key="PLAIN_TEXT" value="66" />
           <entry key="Scratch" value="100" />
@@ -36,15 +40,15 @@
         <counts>
           <entry key="env" value="3" />
           <entry key="gitignore" value="1" />
-          <entry key="go" value="47" />
-          <entry key="json" value="51" />
+          <entry key="go" value="52" />
+          <entry key="json" value="53" />
           <entry key="txt" value="3" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="env" value="66" />
-          <entry key="go" value="1438" />
+          <entry key="go" value="1479" />
           <entry key="json" value="427" />
           <entry key="txt" value="100" />
         </counts>
@@ -52,8 +56,8 @@
       <usages-collector id="statistics.go.postfix.template.usages.trigger" />
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="Go" value="47" />
-          <entry key="JSON" value="51" />
+          <entry key="Go" value="52" />
+          <entry key="JSON" value="53" />
           <entry key="PLAIN_TEXT" value="4" />
           <entry key="Scratch" value="3" />
         </counts>
@@ -65,8 +69,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/internal/elk/elk_create.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1593">
-              <caret line="252" column="16" selection-start-line="252" selection-start-column="16" selection-end-line="252" selection-end-column="16" />
+            <state relative-caret-position="92">
+              <caret line="74" column="14" lean-forward="true" selection-start-line="74" selection-start-column="14" selection-end-line="74" selection-end-column="14" />
             </state>
           </provider>
         </entry>
@@ -80,20 +84,65 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/.gitignore">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/internal/elk/elk_delete.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="15">
-              <caret line="1" selection-start-line="1" selection-end-line="1" />
+            <state relative-caret-position="178">
+              <caret line="214" column="30" selection-start-line="214" selection-start-column="30" selection-end-line="214" selection-end-column="30" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/.env">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/base/1-Namespace.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="135">
+              <caret line="9" column="1" lean-forward="true" selection-start-line="9" selection-start-column="1" selection-end-line="9" selection-end-column="1" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/internal/elk/elk.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="165">
+              <caret line="20" column="36" lean-forward="true" selection-start-line="20" selection-start-column="36" selection-end-line="20" selection-end-column="36" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/base/kib-deploy.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="330">
+              <caret line="22" column="7" lean-forward="true" selection-start-line="22" selection-start-column="7" selection-end-line="22" selection-end-column="7" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/internal/deploy/delete.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="75">
+              <caret line="8" column="5" selection-start-line="8" selection-start-column="5" selection-end-line="8" selection-end-column="5" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/internal/elk/elk_get.go">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="15">
-              <caret line="1" column="16" selection-start-line="1" selection-start-column="16" selection-end-line="1" selection-end-column="16" />
+              <caret line="1" lean-forward="true" selection-start-line="1" selection-end-line="1" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/internal/elk/elk_list.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="338">
+              <caret line="45" selection-start-line="45" selection-end-line="45" />
             </state>
           </provider>
         </entry>
@@ -109,19 +158,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>org1</find>
-      <find>service</find>
-      <find>log_dir</find>
-      <find>createde</find>
-      <find>image</find>
-      <find>claim</find>
-      <find>MMAU1143150</find>
-      <find>6.</find>
-      <find>xpack</find>
-      <find>pack</find>
-      <find>July</find>
-      <find>`</find>
-      <find>SGSIN</find>
       <find>\n(.+)\n(.+)\n(.+)\n(.+)\n</find>
       <find>namespac</find>
       <find>default</find>
@@ -139,6 +175,19 @@
       <find>replace</find>
       <find>strings</find>
       <find>ingress</find>
+      <find>tradelens</find>
+      <find>Elkconfig.</find>
+      <find>Elkconfig</find>
+      <find>deployments</find>
+      <find>ORG-</find>
+      <find>ORG</find>
+      <find>: Namespace</find>
+      <find>failed to delete Namespace</find>
+      <find>$ORG</find>
+      <find>Deploy</find>
+      <find>getco</find>
+      <find>ingress create</find>
+      <find>delete</find>
     </findStrings>
     <replaceStrings>
       <replace>package main</replace>
@@ -153,6 +202,8 @@
       <replace>$1, $2, $3, $4 \n</replace>
       <replace>elkconfig.Org</replace>
       <replace>elkconfig.Org,</replace>
+      <replace>elkconfig</replace>
+      <replace>elkconfig.</replace>
     </replaceStrings>
     <dirStrings>
       <dir>$PROJECT_DIR$</dir>
@@ -186,11 +237,8 @@
         <option value="$PROJECT_DIR$/internal/namespace/create.go" />
         <option value="$PROJECT_DIR$/internal/namespace/delete.go" />
         <option value="$PROJECT_DIR$/internal/namespace/get.go" />
-        <option value="$PROJECT_DIR$/internal/elk/elk_list.go" />
-        <option value="$PROJECT_DIR$/internal/elk/elk_get.go" />
         <option value="$PROJECT_DIR$/internal/web/handlers.go" />
         <option value="$PROJECT_DIR$/base/kib-config.json" />
-        <option value="$PROJECT_DIR$/base/kib-deploy.json" />
         <option value="$PROJECT_DIR$/base/kib-service.json" />
         <option value="$PROJECT_DIR$/base/ls-config.json" />
         <option value="$PROJECT_DIR$/base/ls-service.json" />
@@ -204,19 +252,22 @@
         <option value="$PROJECT_DIR$/internal/ingress/get.go" />
         <option value="$PROJECT_DIR$/internal/secret/create.go" />
         <option value="$PROJECT_DIR$/internal/secret/delete.go" />
-        <option value="$PROJECT_DIR$/internal/elk/elk_delete.go" />
         <option value="$APPLICATION_CONFIG_DIR$/scratches/scratch_2.txt" />
         <option value="$PROJECT_DIR$/internal/secret/get.go" />
         <option value="$PROJECT_DIR$/base/x-useraccess.json" />
         <option value="$PROJECT_DIR$/base/2-es-a-memory.json" />
         <option value="$PROJECT_DIR$/base/3-basic-auth-svc.json" />
         <option value="$PROJECT_DIR$/base/3-basic-auth.json" />
-        <option value="$PROJECT_DIR$/internal/elk/elk_create.go" />
         <option value="$PROJECT_DIR$/internal/dotenv/dotenv.go" />
         <option value="$PROJECT_DIR$/cmd/elk/main.go" />
-        <option value="$PROJECT_DIR$/internal/elk/elk.go" />
         <option value="$PROJECT_DIR$/base/x-ingress.json" />
         <option value="$PROJECT_DIR$/.env" />
+        <option value="$PROJECT_DIR$/internal/elk/elk_get.go" />
+        <option value="$PROJECT_DIR$/internal/elk/elk_list.go" />
+        <option value="$PROJECT_DIR$/internal/elk/elk_create.go" />
+        <option value="$PROJECT_DIR$/base/kib-deploy.json" />
+        <option value="$PROJECT_DIR$/internal/elk/elk.go" />
+        <option value="$PROJECT_DIR$/internal/elk/elk_delete.go" />
       </list>
     </option>
   </component>
@@ -248,7 +299,18 @@
             <path>
               <item name="kube-elk" type="b2602c69:ProjectViewProjectNode" />
               <item name="kube-elk" type="462c0819:PsiDirectoryNode" />
+              <item name="base" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="kube-elk" type="b2602c69:ProjectViewProjectNode" />
+              <item name="kube-elk" type="462c0819:PsiDirectoryNode" />
               <item name="internal" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="kube-elk" type="b2602c69:ProjectViewProjectNode" />
+              <item name="kube-elk" type="462c0819:PsiDirectoryNode" />
+              <item name="internal" type="462c0819:PsiDirectoryNode" />
+              <item name="elk" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="kube-elk" type="b2602c69:ProjectViewProjectNode" />
@@ -262,7 +324,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="DefaultGoTemplateProperty" value="Go File" />
-    <property name="SearchEverywhereHistoryKey" value="main&#9;FILE&#9;file:///Users/marek.bejda/go/src/github.com/marek5050/kube-elk/cmd/elk/main.go&#10;manifest&#9;FILE&#9;file:///Users/marek.bejda/go/src/github.com/balin_ttracker/pkg/dep/sources/https---github.com-containerd-continuity/manifest.go" />
+    <property name="SearchEverywhereHistoryKey" value="UserCreate&#9;null&#9;null&#10;main&#9;FILE&#9;file:///Users/marek.bejda/go/src/github.com/marek5050/kube-elk/cmd/elk/main.go&#10;manifest&#9;FILE&#9;file:///Users/marek.bejda/go/src/github.com/balin_ttracker/pkg/dep/sources/https---github.com-containerd-continuity/manifest.go" />
     <property name="com.intellij.ide.scratch.LRUPopupBuilder$1/New Scratch File" value="TEXT" />
     <property name="com.intellij.ide.scratch.LRUPopupBuilder$2/Languages" value="JSON" />
     <property name="configurable.Global.GOPATH.is.expanded" value="true" />
@@ -504,19 +566,19 @@
     <frame x="301" y="23" width="1379" height="960" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.21540762" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.21540762" />
       <window_info id="Structure" order="1" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.32781065" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.32781065" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.39881656" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info anchor="bottom" id="Graph Database Console" order="8" />
-      <window_info anchor="bottom" id="Terminal" order="9" visible="true" weight="0.43076923" />
+      <window_info anchor="bottom" id="Terminal" order="9" weight="0.43076923" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
       <window_info anchor="bottom" id="Docker" order="11" show_stripe_button="false" />
       <window_info anchor="bottom" id="REST Client" order="12" weight="0.3289941" />
@@ -600,13 +662,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/base-prem/ls-service.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="22" column="19" lean-forward="true" selection-start-line="22" selection-start-column="19" selection-end-line="22" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/base-prem/ls-config.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="165">
@@ -670,20 +725,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="60">
           <caret line="6" column="5" selection-start-line="6" selection-start-column="5" selection-end-line="6" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/internal/elk/elk_list.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="26" column="35" selection-start-line="26" selection-start-column="35" selection-end-line="26" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/internal/elk/elk_get.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1627">
-          <caret line="55" column="39" selection-start-line="55" selection-start-column="39" selection-end-line="55" selection-end-column="39" />
         </state>
       </provider>
     </entry>
@@ -798,13 +839,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/internal/elk/elk_delete.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2925">
-          <caret line="208" column="29" selection-start-line="208" selection-start-column="29" selection-end-line="208" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/internal/ingress/delete.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="60">
@@ -819,24 +853,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/base/1-Namespace.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="1" lean-forward="true" selection-start-column="1" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$APPLICATION_CONFIG_DIR$/scratches/scratch_2.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="150">
           <caret line="10" column="11" lean-forward="true" selection-start-line="10" selection-start-column="11" selection-end-line="10" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/base/kib-deploy.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="38" column="12" selection-start-line="38" selection-start-column="12" selection-end-line="42" selection-end-column="16" />
         </state>
       </provider>
     </entry>
@@ -894,20 +914,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cmd/elk/main.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="25" column="17" selection-start-line="25" selection-start-column="17" selection-end-line="25" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" selection-start-line="1" selection-end-line="1" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/base/3-basic-auth-svc.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="120">
@@ -943,24 +949,80 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/internal/elk/elk.go">
+    <entry file="file://$PROJECT_DIR$/.env">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="278">
-          <caret line="58" column="82" lean-forward="true" selection-start-line="58" selection-start-column="82" selection-end-line="58" selection-end-column="82" />
+        <state relative-caret-position="15">
+          <caret line="1" column="16" lean-forward="true" selection-start-line="1" selection-start-column="16" selection-end-line="1" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/internal/elk/elk_get.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="1" lean-forward="true" selection-start-line="1" selection-end-line="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/internal/elk/elk_list.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="338">
+          <caret line="45" selection-start-line="45" selection-end-line="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/internal/deploy/delete.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="8" column="5" selection-start-line="8" selection-start-column="5" selection-end-line="8" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/base/kib-deploy.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="22" column="7" lean-forward="true" selection-start-line="22" selection-start-column="7" selection-end-line="22" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/base/1-Namespace.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="9" column="1" lean-forward="true" selection-start-line="9" selection-start-column="1" selection-end-line="9" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cmd/elk/main.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="25" column="17" selection-start-line="25" selection-start-column="17" selection-end-line="25" selection-end-column="17" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/internal/elk/elk_create.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1593">
-          <caret line="252" column="16" selection-start-line="252" selection-start-column="16" selection-end-line="252" selection-end-column="16" />
+        <state relative-caret-position="92">
+          <caret line="74" column="14" lean-forward="true" selection-start-line="74" selection-start-column="14" selection-end-line="74" selection-end-column="14" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.env">
+    <entry file="file://$PROJECT_DIR$/internal/elk/elk.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" column="16" selection-start-line="1" selection-start-column="16" selection-end-line="1" selection-end-column="16" />
+        <state relative-caret-position="165">
+          <caret line="20" column="36" lean-forward="true" selection-start-line="20" selection-start-column="36" selection-end-line="20" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/internal/elk/elk_delete.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="178">
+          <caret line="214" column="30" selection-start-line="214" selection-start-column="30" selection-end-line="214" selection-end-column="30" />
         </state>
       </provider>
     </entry>

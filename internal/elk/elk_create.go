@@ -15,7 +15,6 @@ import (
 	"github.com/marek5050/kube-elk/internal/secret"
 )
 
-var Elkconfig *ElkConfig
 
 func init() {
 	//print("init elk_create\n")
@@ -30,14 +29,14 @@ func init() {
 }
 
 func ServicesCreate(elkconfig *ElkConfig) {
-	var org = Elkconfig.Org
+	var org = elkconfig.Org
 	raw := GetConfig("./base/kib-service.json", org)
 
 	var _svc = &apiv1.Service{}
 	var err error
 
 	json.Unmarshal(raw, &_svc)
-	_svc.Spec.Ports[0].NodePort = Elkconfig.Kib_p
+	_svc.Spec.Ports[0].NodePort = elkconfig.Kib_p
 
 	_, err = svc.ServiceCreate(Clientset, elkconfig.Org, _svc)
 	if err != nil {
@@ -63,7 +62,7 @@ func ServicesCreate(elkconfig *ElkConfig) {
 	_svc = &apiv1.Service{}
 	json.Unmarshal(raw, &_svc)
 
-	_svc.Spec.Ports[0].NodePort = Elkconfig.Ls_p
+	_svc.Spec.Ports[0].NodePort = elkconfig.Ls_p
 
 	_, err = svc.ServiceCreate(Clientset, elkconfig.Org, _svc)
 
@@ -88,7 +87,7 @@ func ServicesCreate(elkconfig *ElkConfig) {
 }
 
 func DeploymentCreate(elkconfig *ElkConfig) {
-	var org = Elkconfig.Org
+	var org = elkconfig.Org
 	raw := GetConfig("./base/kib-deploy.json", org)
 
 	var item = &v1beta1.Deployment{}
@@ -138,7 +137,7 @@ func DeploymentCreate(elkconfig *ElkConfig) {
 }
 
 func ConfigMapCreate(elkconfig *ElkConfig) {
-	var org = Elkconfig.Org
+	var org = elkconfig.Org
 
 	raw := GetConfig("./base/kib-config.json", org)
 
@@ -187,7 +186,7 @@ func CreateNamespace(elkconfig *ElkConfig) {
 }
 
 func PVCCreate(elkconfig *ElkConfig) {
-	var org = Elkconfig.Org
+	var org = elkconfig.Org
 	raw := GetConfig("./base/pvclaim-data.json", org)
 
 	var item = &apiv1.PersistentVolumeClaim{}
@@ -230,7 +229,7 @@ func PVCCreate(elkconfig *ElkConfig) {
 }
 
 func PVCreate(elkconfig *ElkConfig) {
-	var org = Elkconfig.Org
+	var org = elkconfig.Org
 	var err error
 
 	raw := GetConfig("./base/pvstore.json", org)
@@ -281,7 +280,6 @@ func UserCreate(elkconfig *ElkConfig) {
 }
 
 func ElkCreate(elkconfig *ElkConfig) error {
-	Elkconfig = elkconfig
 	CreateNamespace(elkconfig)
 	ConfigMapCreate(elkconfig)
 	PVCreate(elkconfig)

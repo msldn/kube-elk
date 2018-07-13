@@ -14,7 +14,7 @@ import (
 )
 
 func ServicesGet(elkconfig *ElkConfig) {
-	var org = Elkconfig.Org
+	var org = elkconfig.Org
 	raw := GetConfig("./base/kib-service.json", org)
 
 	var _svc = &apiv1.Service{}
@@ -54,7 +54,7 @@ func ServicesGet(elkconfig *ElkConfig) {
 }
 
 func DeploymentGet(elkconfig *ElkConfig) {
-	var org = Elkconfig.Org
+	var org = elkconfig.Org
 
 	raw := GetConfig("./base/kib-deploy.json", org)
 
@@ -94,7 +94,7 @@ func DeploymentGet(elkconfig *ElkConfig) {
 }
 
 func ConfigMapGet(elkconfig *ElkConfig) {
-	var org = Elkconfig.Org
+	var org = elkconfig.Org
 
 	raw := GetConfig("./base/kib-config.json", org)
 
@@ -124,7 +124,7 @@ func ConfigMapGet(elkconfig *ElkConfig) {
 }
 
 func PVCGet(elkconfig *ElkConfig) {
-	var org = Elkconfig.Org
+	var org = elkconfig.Org
 
 	raw := GetConfig("./base/pvclaim-data.json", org)
 

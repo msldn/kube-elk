@@ -3,7 +3,7 @@
   "kind": "Deployment",
   "metadata": {
     "creationTimestamp": null,
-    "name": "$ORG-k1",
+    "name": "k1",
     "labels": {
       "name": "kibana",
       "org": "$ORG",
@@ -39,7 +39,7 @@
             "env": [
               {
                 "name": "SERVER_NAME",
-                "value": "$ORG-k1"
+                "value": "k1"
               },
               {
                 "name": "server.host",

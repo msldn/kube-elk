@@ -55,8 +55,8 @@ func GetConfig(name, org string) []byte {
 	}
 
 	ret := []byte(strings.Replace(string(raw), "$ORG", org, -1))
-	ret = []byte(strings.Replace(string(raw), "$DOMAIN", os.Getenv("DOMAIN"), -1))
-	ret = []byte(strings.Replace(string(raw), "$SECRET", os.Getenv("SECRET"), -1))
+	ret = []byte(strings.Replace(string(ret), "$DOMAIN", os.Getenv("DOMAIN"), -1))
+	ret = []byte(strings.Replace(string(ret), "$SECRET", os.Getenv("SECRET"), -1))
 
 	return ret
 }
