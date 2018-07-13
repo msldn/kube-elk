@@ -7,7 +7,7 @@
       "name": "logstash",
       "org": "$ORG"
     },
-    "name": "logstash-$ORG"
+    "name": "logstash"
   },
   "spec": {
     "type": "NodePort",

@@ -2,13 +2,13 @@
   "apiVersion": "v1",
   "kind": "ConfigMap",
   "metadata": {
-    "name": "$ORG-ls1-config",
+    "name": "ls1-config",
     "labels": {
       "name": "logstash",
       "org": "$ORG"
     }
   },
   "data": {
-    "logstash.conf": "input {\n  http {\n    port => 8080\n  }\n}\n\noutput {\n  elasticsearch {\n    hosts => \"elasticsearch-$ORG:9200\"\n  }\n}"
+    "logstash.conf": "input {\n  http {\n    port => 8080\n  }\n}\n\noutput {\n  elasticsearch {\n    hosts => \"elasticsearch:9200\"\n  }\n}"
   }
 }

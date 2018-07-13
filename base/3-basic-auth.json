@@ -1,0 +1,52 @@
+{
+  "apiVersion": "extensions/v1beta1",
+  "kind": "Deployment",
+  "metadata": {
+    "labels": {
+      "name": "nginx-auth"
+    },
+    "name": "nginx-auth"
+  },
+  "spec": {
+    "template": {
+      "metadata": {
+        "labels": {
+          "name": "nginx-auth"
+        }},
+      "spec": {
+        "containers": [
+          {
+            "image": "beevelop/nginx-basic-auth",
+            "name": "nginx-basic-auth" ,
+            "env": [
+              {
+                "name": "HTPASSWD",
+                "value": "foo:$apr1$odHl5EJN$KbxMfo86Qdve2FH4owePn."
+              },{
+                "name": "FORWARD_PORT",
+                "value": "5601"
+              },{
+                "name": "FORWARD_HOST",
+                "value": "kibana"
+              }
+            ],
+            "resources": {
+              "limits": {
+                "cpu": "10m",
+                "memory": "50Mi"
+              },
+              "requests": {
+                "cpu": "10m",
+                "memory": "50Mi"
+              }
+            },
+            "securityContext": {
+              "privileged": true
+            }
+          }
+        ],
+        "terminationGracePeriodSeconds": 1
+      }
+    }
+  }
+}

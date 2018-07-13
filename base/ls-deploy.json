@@ -3,7 +3,7 @@
   "kind": "Deployment",
   "metadata": {
     "creationTimestamp": null,
-    "name": "$ORG-ls1",
+    "name": "ls1",
     "labels": {
       "name": "logstash",
       "org": "$ORG",
@@ -40,7 +40,7 @@
               "-c",
               "env; ls -la /usr/share/logstash/pipeline; logstash -r -f /usr/share/logstash/pipeline/logstash.conf"
             ],
-            "image": "docker.elastic.co/logstash/logstash:6.3.0",
+            "image": "docker.elastic.co/logstash/logstash:6.3.1",
             "name": "logstash",
             "ports": [
               {
@@ -61,7 +61,7 @@
           {
             "name": "config",
             "configMap": {
-              "name": "$ORG-ls1-config",
+              "name": "ls1-config",
               "items": [
                 {
                   "key": "logstash.conf",

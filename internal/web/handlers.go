@@ -23,7 +23,7 @@ func ElkDelete(w http.ResponseWriter, r *http.Request) {
 		Org: OrgId,
 	}
 
-	err = elk.ElkDelete("default", elkconfig)
+	err = elk.ElkDelete(elkconfig)
 
 	if err != nil {
 		w.Header().Set("Content-Type", "application/json; charset=UTF-8")
@@ -55,7 +55,7 @@ func ElkCreate(w http.ResponseWriter, r *http.Request) {
 	}
 
 	json.Unmarshal(body, elkconfig)
-	err = elk.ElkCreate("default", elkconfig)
+	err = elk.ElkCreate(elkconfig)
 
 	if err != nil {
 		w.Header().Set("Content-Type", "application/json; charset=UTF-8")
@@ -78,7 +78,7 @@ func ElkGet(w http.ResponseWriter, r *http.Request) {
 		Org: vars["OrgId"],
 	}
 
-	elk, err := elk.ElkGet("default", elkconfig)
+	elk, err := elk.ElkGet( elkconfig)
 
 	if err != nil {
 		w.Header().Set("Content-Type", "application/json; charset=UTF-8")
@@ -122,7 +122,7 @@ func ElkServiceList(w http.ResponseWriter, r *http.Request) {
 	}
 
 	json.Unmarshal(body, elkconfig)
-	sl, err := elk.ElkServiceList("default", elkconfig)
+	sl, err := elk.ElkServiceList(elkconfig)
 
 	if err != nil {
 		w.Header().Set("Content-Type", "application/json; charset=UTF-8")
@@ -165,7 +165,7 @@ func ElkDeployList(w http.ResponseWriter, r *http.Request) {
 	}
 
 	json.Unmarshal(body, elkconfig)
-	items, err := elk.ElkDeployList("default", elkconfig)
+	items, err := elk.ElkDeployList(elkconfig)
 
 	if err != nil {
 		w.Header().Set("Content-Type", "application/json; charset=UTF-8")

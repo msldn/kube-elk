@@ -7,9 +7,12 @@ import (
 	pv "github.com/marek5050/kube-elk/internal/pv"
 	pvc "github.com/marek5050/kube-elk/internal/pvc"
 	svc "github.com/marek5050/kube-elk/internal/service"
+	ns "github.com/marek5050/kube-elk/internal/namespace"
 	log "github.com/sirupsen/logrus"
 	apiv1 "k8s.io/api/core/v1"
 	"k8s.io/api/extensions/v1beta1"
+	"github.com/marek5050/kube-elk/internal/ingress"
+	"github.com/marek5050/kube-elk/internal/secret"
 )
 
 var Elkconfig *ElkConfig
@@ -26,7 +29,7 @@ func init() {
 	//log.AddHook(h)
 }
 
-func ServicesCreate() {
+func ServicesCreate(elkconfig *ElkConfig) {
 	var org = Elkconfig.Org
 	raw := GetConfig("./base/kib-service.json", org)
 
@@ -36,7 +39,7 @@ func ServicesCreate() {
 	json.Unmarshal(raw, &_svc)
 	_svc.Spec.Ports[0].NodePort = Elkconfig.Kib_p
 
-	_, err = svc.ServiceCreate(Clientset, namespace, _svc)
+	_, err = svc.ServiceCreate(Clientset, elkconfig.Org, _svc)
 	if err != nil {
 		log.Error(err)
 	} else {
@@ -48,7 +51,7 @@ func ServicesCreate() {
 	_svc = &apiv1.Service{}
 	json.Unmarshal(raw, &_svc)
 
-	_, err = svc.ServiceCreate(Clientset, namespace, _svc)
+	_, err = svc.ServiceCreate(Clientset, elkconfig.Org, _svc)
 	if err != nil {
 		log.Error(err)
 	} else {
@@ -62,16 +65,29 @@ func ServicesCreate() {
 
 	_svc.Spec.Ports[0].NodePort = Elkconfig.Ls_p
 
-	_, err = svc.ServiceCreate(Clientset, namespace, _svc)
+	_, err = svc.ServiceCreate(Clientset, elkconfig.Org, _svc)
 
 	if err != nil {
 		log.Error(err)
 	} else {
 		log.Info("Service: Create: LS")
 	}
+
+	raw = GetConfig("./base/3-basic-auth-svc.json", org)
+
+	_svc = &apiv1.Service{}
+	json.Unmarshal(raw, &_svc)
+
+	_, err = svc.ServiceCreate(Clientset, elkconfig.Org, _svc)
+
+	if err != nil {
+		log.Error(err)
+	} else {
+		log.Info("Service: Create: Basic-Auth")
+	}
 }
 
-func DeploymentCreate() {
+func DeploymentCreate(elkconfig *ElkConfig) {
 	var org = Elkconfig.Org
 	raw := GetConfig("./base/kib-deploy.json", org)
 
@@ -79,7 +95,7 @@ func DeploymentCreate() {
 	var err error
 
 	json.Unmarshal(raw, &item)
-	_, err = deploy.DeploymentCreate(Clientset, namespace, item)
+	_, err = deploy.DeploymentCreate(Clientset, elkconfig.Org, item)
 	if err != nil {
 		log.Error(err)
 	} else {
@@ -90,7 +106,7 @@ func DeploymentCreate() {
 
 	item = &v1beta1.Deployment{}
 	json.Unmarshal(raw, &item)
-	_, err = deploy.DeploymentCreate(Clientset, namespace, item)
+	_, err = deploy.DeploymentCreate(Clientset, elkconfig.Org, item)
 	if err != nil {
 		log.Error(err)
 	} else {
@@ -101,16 +117,27 @@ func DeploymentCreate() {
 
 	item = &v1beta1.Deployment{}
 	json.Unmarshal(raw, &item)
-	_, err = deploy.DeploymentCreate(Clientset, namespace, item)
+	_, err = deploy.DeploymentCreate(Clientset, elkconfig.Org, item)
 	if err != nil {
 		log.Error(err)
 	} else {
 		log.Info("Deploy: Create: LS")
 	}
 
+	raw = GetConfig("./base/3-basic-auth.json", org)
+
+	item = &v1beta1.Deployment{}
+	json.Unmarshal(raw, &item)
+	_, err = deploy.DeploymentCreate(Clientset, elkconfig.Org, item)
+	if err != nil {
+		log.Error(err)
+	} else {
+		log.Info("Deploy: Create: Basic Auth")
+	}
+
 }
 
-func ConfigMapCreate() {
+func ConfigMapCreate(elkconfig *ElkConfig) {
 	var org = Elkconfig.Org
 
 	raw := GetConfig("./base/kib-config.json", org)
@@ -120,7 +147,7 @@ func ConfigMapCreate() {
 
 	json.Unmarshal(raw, &item)
 
-	_, err = cm.ConfigMapCreate(Clientset, namespace, item)
+	_, err = cm.ConfigMapCreate(Clientset, elkconfig.Org, item)
 
 	if err != nil {
 		log.Error(err)
@@ -133,7 +160,7 @@ func ConfigMapCreate() {
 	item = &apiv1.ConfigMap{}
 	json.Unmarshal(raw, &item)
 
-	_, err = cm.ConfigMapCreate(Clientset, namespace, item)
+	_, err = cm.ConfigMapCreate(Clientset, elkconfig.Org, item)
 
 	if err != nil {
 		log.Error("Failed to create Logstash ConfigMap")
@@ -142,7 +169,24 @@ func ConfigMapCreate() {
 	}
 }
 
-func PVCCreate() {
+func CreateNamespace(elkconfig *ElkConfig) {
+	raw := GetConfig("./base/1-Namespace.json", elkconfig.Org)
+
+	var item = &apiv1.Namespace{}
+	var err error
+
+	json.Unmarshal(raw, &item)
+
+	_, err = ns.NamespaceCreate(Clientset, item)
+
+	if err != nil {
+		log.Error(err)
+	} else {
+		log.Infof("CM: Create: Namespace: %s", elkconfig.Org)
+	}
+}
+
+func PVCCreate(elkconfig *ElkConfig) {
 	var org = Elkconfig.Org
 	raw := GetConfig("./base/pvclaim-data.json", org)
 
@@ -150,7 +194,7 @@ func PVCCreate() {
 	var err error
 
 	json.Unmarshal(raw, &item)
-	_, err = pvc.PVCCreate(Clientset, namespace, item)
+	_, err = pvc.PVCCreate(Clientset, elkconfig.Org, item)
 
 	if err != nil {
 		log.Error("Failed to Create PVClaim-Data")
@@ -163,7 +207,7 @@ func PVCCreate() {
 	item = &apiv1.PersistentVolumeClaim{}
 
 	json.Unmarshal(raw, &item)
-	_, err = pvc.PVCCreate(Clientset, namespace, item)
+	_, err = pvc.PVCCreate(Clientset, elkconfig.Org, item)
 
 	if err != nil {
 		log.Error("Failed to Create PVClaim-Logs")
@@ -176,7 +220,7 @@ func PVCCreate() {
 	item = &apiv1.PersistentVolumeClaim{}
 
 	json.Unmarshal(raw, &item)
-	_, err = pvc.PVCCreate(Clientset, namespace, item)
+	_, err = pvc.PVCCreate(Clientset, elkconfig.Org, item)
 
 	if err != nil {
 		log.Error("Failed to Create PVClaim-Org")
@@ -185,7 +229,7 @@ func PVCCreate() {
 	}
 }
 
-func PVCreate() {
+func PVCreate(elkconfig *ElkConfig) {
 	var org = Elkconfig.Org
 	var err error
 
@@ -202,14 +246,49 @@ func PVCreate() {
 	}
 }
 
-func ElkCreate(_namespace string, elkconfig *ElkConfig) error {
-	namespace = _namespace
-	Elkconfig = elkconfig
-	ConfigMapCreate()
-	PVCreate()
-	PVCCreate()
-	DeploymentCreate()
-	ServicesCreate()
+func IngressCreate(elkconfig *ElkConfig) {
+	var org = elkconfig.Org
+	var err error
 
+	raw := GetConfig("./base/x-ingress.json", org)
+
+	var _pv = &v1beta1.Ingress{}
+	json.Unmarshal(raw, &_pv)
+	_, err = ingress.IngressCreate(Clientset,org, _pv)
+
+	if err != nil {
+		log.Error("failed: IngressCreate")
+	} else {
+		log.Info("Ingress: Create")
+	}
+}
+
+func UserCreate(elkconfig *ElkConfig) {
+	var org = elkconfig.Org
+	var err error
+
+	raw := GetConfig("./base/x-useraccess.json", org)
+
+	var _pv = &apiv1.Secret{}
+	json.Unmarshal(raw, &_pv)
+	_, err = secret.SecretCreate(Clientset,org, _pv)
+
+	if err != nil {
+		log.Error("failed: UserCreate")
+	} else {
+		log.Info("User: Create")
+	}
+}
+
+func ElkCreate(elkconfig *ElkConfig) error {
+	Elkconfig = elkconfig
+	CreateNamespace(elkconfig)
+	ConfigMapCreate(elkconfig)
+	PVCreate(elkconfig)
+	PVCCreate(elkconfig)
+	DeploymentCreate(elkconfig)
+	ServicesCreate(elkconfig)
+	UserCreate(elkconfig)
+	IngressCreate(elkconfig)
 	return nil
 }

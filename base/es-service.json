@@ -7,7 +7,7 @@
       "name": "elasticsearch",
       "org": "$ORG"
     },
-    "name": "elasticsearch-$ORG"
+    "name": "elasticsearch"
   },
   "spec": {
     "ports": [

@@ -26,7 +26,8 @@ import (
 	"k8s.io/client-go/util/homedir"
 	"net/http"
 	"path/filepath"
-)
+	"github.com/marek5050/kube-elk/internal/dotenv"
+	)
 
 var log logrus.Logger
 var namespace = "default"
@@ -41,7 +42,9 @@ func init() {
 	//logrus.SetLevel(logrus.InfoLevel)
 	//logrus.AddHook(h)
 
+	gotenv.Load()
 	var kubeconfig *string
+
 	if home := homedir.HomeDir(); home != "" {
 		kubeconfig = flag.String("kubeconfig", filepath.Join(home, ".kube", "config"), "(optional) absolute path to the kubeconfig file")
 	} else {

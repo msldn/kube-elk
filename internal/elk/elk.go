@@ -11,9 +11,6 @@ import (
 	"k8s.io/api/extensions/v1beta1"
 )
 
-var namespace = "default"
-var OrgId = "ORG"
-
 var Clientset *kubernetes.Clientset
 
 func init() {
@@ -56,7 +53,10 @@ func GetConfig(name, org string) []byte {
 		fmt.Println(err.Error())
 		os.Exit(1)
 	}
+
 	ret := []byte(strings.Replace(string(raw), "$ORG", org, -1))
+	ret = []byte(strings.Replace(string(raw), "$DOMAIN", os.Getenv("DOMAIN"), -1))
+	ret = []byte(strings.Replace(string(raw), "$SECRET", os.Getenv("SECRET"), -1))
 
 	return ret
 }

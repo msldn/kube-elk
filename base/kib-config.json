@@ -2,13 +2,13 @@
   "apiVersion": "v1",
   "kind": "ConfigMap",
   "metadata": {
-    "name": "$ORG-k1-config",
+    "name": "k1-config",
     "labels": {
       "name": "kibana",
       "org": "$ORG"
     }
   },
   "data": {
-    "kibana.yml": "---\nserver.name: $ORG-k1\nserver.host: \"0\"\nelasticsearch.url: http://elasticsearch-$ORG:9200"
+    "kibana.yml": "---\nserver.name: $ORG-k1\nserver.host: \"0\"\nelasticsearch.url: http://elasticsearch:9200"
   }
 }

@@ -12,8 +12,8 @@ import (
 	"k8s.io/api/extensions/v1beta1"
 )
 
-func ServicesList() (*apiv1.ServiceList, error) {
-	items, err := svc.ServiceList(Clientset, namespace, Elkconfig.Org)
+func ServicesList(elkconfig *ElkConfig) (*apiv1.ServiceList, error) {
+	items, err := svc.ServiceList(Clientset, elkconfig.Org, Elkconfig.Org)
 	if err != nil {
 		log.Info("Failed to retrieve Services List %s", err)
 	} else {
@@ -23,8 +23,8 @@ func ServicesList() (*apiv1.ServiceList, error) {
 	return items, err
 }
 
-func DeployList() (*v1beta1.DeploymentList, error) {
-	items, err := deploy.DeploymentList(Clientset, namespace, Elkconfig.Org)
+func DeployList(elkconfig *ElkConfig) (*v1beta1.DeploymentList, error) {
+	items, err := deploy.DeploymentList(Clientset, elkconfig.Org, Elkconfig.Org)
 	if err != nil {
 		log.Info("Failed to retrieve Deploy List %s", err)
 	} else {
@@ -33,10 +33,9 @@ func DeployList() (*v1beta1.DeploymentList, error) {
 	return items, err
 }
 
-func ElkServiceList(_namespace string, elkconfig *ElkConfig) (*apiv1.ServiceList, error) {
-	namespace = _namespace
+func ElkServiceList(elkconfig *ElkConfig) (*apiv1.ServiceList, error) {
 	Elkconfig = elkconfig
-	sl, err := ServicesList()
+	sl, err := ServicesList(elkconfig)
 	if err != nil {
 		print(sl)
 	}
@@ -44,10 +43,9 @@ func ElkServiceList(_namespace string, elkconfig *ElkConfig) (*apiv1.ServiceList
 	return sl, err
 }
 
-func ElkDeployList(_namespace string, elkconfig *ElkConfig) (*v1beta1.DeploymentList, error) {
-	namespace = _namespace
+func ElkDeployList(elkconfig *ElkConfig) (*v1beta1.DeploymentList, error) {
 	Elkconfig = elkconfig
-	items, err := DeployList()
+	items, err := DeployList(elkconfig)
 	if err != nil {
 		print(items)
 	}

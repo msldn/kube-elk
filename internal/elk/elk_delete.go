@@ -6,13 +6,16 @@ import (
 	deploy "github.com/marek5050/kube-elk/internal/deploy"
 	pvc "github.com/marek5050/kube-elk/internal/pvc"
 	svc "github.com/marek5050/kube-elk/internal/service"
+	ns "github.com/marek5050/kube-elk/internal/namespace"
 	apiv1 "k8s.io/api/core/v1"
 	//pv "github.com/marek5050/kube-elk/internal/pv"
 	log "github.com/sirupsen/logrus"
 	"k8s.io/api/extensions/v1beta1"
+	"github.com/marek5050/kube-elk/internal/ingress"
+	"github.com/marek5050/kube-elk/internal/secret"
 )
 
-func ServicesDelete() {
+func ServicesDelete(elkconfig *ElkConfig ) {
 	var org = Elkconfig.Org
 	raw := GetConfig("./base/kib-service.json", org)
 
@@ -20,7 +23,7 @@ func ServicesDelete() {
 	var err error
 
 	json.Unmarshal(raw, &_svc)
-	err = svc.ServiceDelete(Clientset, namespace, _svc.Name)
+	err = svc.ServiceDelete(Clientset, elkconfig.Org, _svc.Name)
 	if err != nil {
 		log.Error(err)
 	} else {
@@ -31,7 +34,7 @@ func ServicesDelete() {
 
 	_svc = &apiv1.Service{}
 	json.Unmarshal(raw, &_svc)
-	err = svc.ServiceDelete(Clientset, namespace, _svc.Name)
+	err = svc.ServiceDelete(Clientset, elkconfig.Org, _svc.Name)
 	if err != nil {
 		log.Error(err)
 	} else {
@@ -42,7 +45,7 @@ func ServicesDelete() {
 
 	_svc = &apiv1.Service{}
 	json.Unmarshal(raw, &_svc)
-	err = svc.ServiceDelete(Clientset, namespace, _svc.Name)
+	err = svc.ServiceDelete(Clientset, elkconfig.Org, _svc.Name)
 
 	if err != nil {
 		log.Error(err)
@@ -51,7 +54,7 @@ func ServicesDelete() {
 	}
 }
 
-func DeploymentDelete() {
+func DeploymentDelete(elkconfig *ElkConfig) {
 	var org = Elkconfig.Org
 
 	raw := GetConfig("./base/kib-deploy.json", org)
@@ -60,7 +63,7 @@ func DeploymentDelete() {
 	var err error
 
 	json.Unmarshal(raw, &item)
-	err = deploy.DeploymentDelete(Clientset, namespace, item.Name)
+	err = deploy.DeploymentDelete(Clientset, elkconfig.Org, item.Name)
 	if err != nil {
 		log.Error(err)
 	} else {
@@ -71,7 +74,7 @@ func DeploymentDelete() {
 
 	item = &v1beta1.Deployment{}
 	json.Unmarshal(raw, &item)
-	err = deploy.DeploymentDelete(Clientset, namespace, item.Name)
+	err = deploy.DeploymentDelete(Clientset, elkconfig.Org, item.Name)
 	if err != nil {
 		log.Error(err)
 	} else {
@@ -82,7 +85,7 @@ func DeploymentDelete() {
 
 	item = &v1beta1.Deployment{}
 	json.Unmarshal(raw, &item)
-	err = deploy.DeploymentDelete(Clientset, namespace, item.Name)
+	err = deploy.DeploymentDelete(Clientset, elkconfig.Org, item.Name)
 	if err != nil {
 		log.Error(err)
 	} else {
@@ -91,7 +94,7 @@ func DeploymentDelete() {
 
 }
 
-func ConfigMapDelete() {
+func ConfigMapDelete(elkconfig *ElkConfig) {
 	var org = Elkconfig.Org
 
 	raw := GetConfig("./base/kib-config.json", org)
@@ -100,7 +103,7 @@ func ConfigMapDelete() {
 	var err error
 
 	json.Unmarshal(raw, &item)
-	err = cm.ConfigMapDelete(Clientset, namespace, item.Name)
+	err = cm.ConfigMapDelete(Clientset, elkconfig.Org, item.Name)
 
 	if err != nil {
 		log.Error(err)
@@ -113,7 +116,7 @@ func ConfigMapDelete() {
 	item = &apiv1.ConfigMap{}
 	json.Unmarshal(raw, &item)
 
-	err = cm.ConfigMapDelete(Clientset, namespace, item.Name)
+	err = cm.ConfigMapDelete(Clientset, elkconfig.Org, item.Name)
 
 	if err != nil {
 		log.Error("Failed to delete Logstash ConfigMap")
@@ -122,7 +125,19 @@ func ConfigMapDelete() {
 	}
 }
 
-func PVCDelete() {
+func NamespaceDelete(elkconfig *ElkConfig) {
+	var org = elkconfig.Org
+
+	err := ns.NamespaceDelete(Clientset, org)
+
+	if err != nil {
+		log.Errorf("failed to delete Namespace: %d", org )
+	} else {
+		log.Info("Deploy: Delete: LS")
+	}
+}
+
+func PVCDelete(elkconfig *ElkConfig) {
 	var org = Elkconfig.Org
 
 	raw := GetConfig("./base/pvclaim-data.json", org)
@@ -131,7 +146,7 @@ func PVCDelete() {
 	var err error
 
 	json.Unmarshal(raw, &item)
-	err = pvc.PVCDelete(Clientset, namespace, item.Name)
+	err = pvc.PVCDelete(Clientset, elkconfig.Org, item.Name)
 
 	if err != nil {
 		log.Error("Failed to delete PVClaim-Data")
@@ -144,7 +159,7 @@ func PVCDelete() {
 	item = &apiv1.PersistentVolumeClaim{}
 
 	json.Unmarshal(raw, &item)
-	err = pvc.PVCDelete(Clientset, namespace, item.Name)
+	err = pvc.PVCDelete(Clientset, elkconfig.Org, item.Name)
 
 	if err != nil {
 		log.Error("Failed to Delete PVClaim-logs")
@@ -157,7 +172,7 @@ func PVCDelete() {
 	item = &apiv1.PersistentVolumeClaim{}
 
 	json.Unmarshal(raw, &item)
-	err = pvc.PVCDelete(Clientset, namespace, item.Name)
+	err = pvc.PVCDelete(Clientset, elkconfig.Org, item.Name)
 
 	if err != nil {
 		log.Error("Failed to Delete PVClaim-org")
@@ -167,14 +182,48 @@ func PVCDelete() {
 
 }
 
-func ElkDelete(_namespace string, elkconfig *ElkConfig) error {
-	namespace = _namespace
-	Elkconfig = elkconfig
+func IngressDelete(elkconfig *ElkConfig) {
+	var org = elkconfig.Org
+	var err error
 
-	ServicesDelete()
-	DeploymentDelete()
-	ConfigMapDelete()
-	PVCDelete()
+	raw := GetConfig("./base/x-ingress.json", org)
 
+	var _pv = &v1beta1.Ingress{}
+	json.Unmarshal(raw, &_pv)
+	err = ingress.IngressDelete(Clientset,org,_pv.Name)
+
+	if err != nil {
+		log.Error("failed: IngressCreate")
+	} else {
+		log.Info("Ingress: Create")
+	}
+}
+
+func UserDelete(elkconfig *ElkConfig) {
+	var org = elkconfig.Org
+	var err error
+
+	raw := GetConfig("./base/x-useraccess.json", org)
+
+	var _pv = &apiv1.Secret{}
+	json.Unmarshal(raw, &_pv)
+	err = secret.SecretDelete(Clientset,org, _pv.Name)
+
+	if err != nil {
+		log.Error("failed: UserCreate")
+	} else {
+		log.Info("User: Create")
+	}
+}
+
+
+func ElkDelete(elkconfig *ElkConfig) error {
+	IngressDelete(elkconfig)
+	UserDelete(elkconfig)
+	ServicesDelete(elkconfig)
+	DeploymentDelete(elkconfig)
+	ConfigMapDelete(elkconfig)
+	PVCDelete(elkconfig)
+	NamespaceDelete(elkconfig)
 	return nil
 }

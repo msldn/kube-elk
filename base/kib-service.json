@@ -7,7 +7,7 @@
       "name": "kibana",
       "org": "$ORG"
     },
-    "name": "kibana-$ORG"
+    "name": "kibana"
   },
   "spec": {
     "ports": [

@@ -1,0 +1,47 @@
+{
+  "apiVersion": "extensions/v1beta1",
+  "kind": "Ingress",
+  "metadata": {
+    "name": "ingress-for-ibmdomain-http-and-https"
+  },
+  "spec": {
+    "tls": [
+      {
+        "hosts": [
+          "kib-$ORG.$DOMAIN",
+          "ls-$ORG.$DOMAIN"
+        ],
+        "secretName": "$SECRET"
+      }
+    ],
+    "rules": [
+      {
+        "host": "kib-$ORG.$DOMAIN",
+        "http": {
+          "paths": [
+            {
+              "path": "/",
+              "backend": {
+                "serviceName": "nginx-auth-svc",
+                "servicePort": 80
+              }
+            }
+          ]
+        }
+      },{
+        "host": "ls-$ORG.$DOMAIN",
+        "http": {
+          "paths": [
+            {
+              "path": "/",
+              "backend": {
+                "serviceName": "logstash",
+                "servicePort": 8080
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

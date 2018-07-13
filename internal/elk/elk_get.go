@@ -13,7 +13,7 @@ import (
 	"k8s.io/api/extensions/v1beta1"
 )
 
-func ServicesGet() {
+func ServicesGet(elkconfig *ElkConfig) {
 	var org = Elkconfig.Org
 	raw := GetConfig("./base/kib-service.json", org)
 
@@ -21,7 +21,7 @@ func ServicesGet() {
 	var err error
 
 	json.Unmarshal(raw, &_svc)
-	_, err = svc.ServiceGet(Clientset, namespace, _svc.Name)
+	_, err = svc.ServiceGet(Clientset, elkconfig.Org, _svc.Name)
 
 	if err != nil {
 		log.Error(err)
@@ -33,7 +33,7 @@ func ServicesGet() {
 
 	_svc = &apiv1.Service{}
 	json.Unmarshal(raw, &_svc)
-	_, err = svc.ServiceGet(Clientset, namespace, _svc.Name)
+	_, err = svc.ServiceGet(Clientset, elkconfig.Org, _svc.Name)
 	if err != nil {
 		log.Error(err)
 	} else {
@@ -44,7 +44,7 @@ func ServicesGet() {
 
 	_svc = &apiv1.Service{}
 	json.Unmarshal(raw, &_svc)
-	_, err = svc.ServiceGet(Clientset, namespace, _svc.Name)
+	_, err = svc.ServiceGet(Clientset, elkconfig.Org, _svc.Name)
 
 	if err != nil {
 		log.Error(err)
@@ -53,7 +53,7 @@ func ServicesGet() {
 	}
 }
 
-func DeploymentGet() {
+func DeploymentGet(elkconfig *ElkConfig) {
 	var org = Elkconfig.Org
 
 	raw := GetConfig("./base/kib-deploy.json", org)
@@ -62,7 +62,7 @@ func DeploymentGet() {
 	var err error
 
 	json.Unmarshal(raw, &item)
-	item, err = deploy.DeploymentGet(Clientset, namespace, item.Name)
+	item, err = deploy.DeploymentGet(Clientset, elkconfig.Org, item.Name)
 	if err != nil {
 		log.Error(err)
 	} else {
@@ -73,7 +73,7 @@ func DeploymentGet() {
 
 	item = &v1beta1.Deployment{}
 	json.Unmarshal(raw, &item)
-	item, err = deploy.DeploymentGet(Clientset, namespace, item.Name)
+	item, err = deploy.DeploymentGet(Clientset, elkconfig.Org, item.Name)
 	if err != nil {
 		log.Error(err)
 	} else {
@@ -84,7 +84,7 @@ func DeploymentGet() {
 
 	item = &v1beta1.Deployment{}
 	json.Unmarshal(raw, &item)
-	item, err = deploy.DeploymentGet(Clientset, namespace, item.Name)
+	item, err = deploy.DeploymentGet(Clientset, elkconfig.Org, item.Name)
 	if err != nil {
 		log.Error(err)
 	} else {
@@ -93,7 +93,7 @@ func DeploymentGet() {
 
 }
 
-func ConfigMapGet() {
+func ConfigMapGet(elkconfig *ElkConfig) {
 	var org = Elkconfig.Org
 
 	raw := GetConfig("./base/kib-config.json", org)
@@ -102,7 +102,7 @@ func ConfigMapGet() {
 	var err error
 
 	json.Unmarshal(raw, &item)
-	item, err = cm.ConfigMapGet(Clientset, namespace, item.Name)
+	item, err = cm.ConfigMapGet(Clientset, elkconfig.Org, item.Name)
 
 	if err != nil {
 		log.Error(err)
@@ -114,7 +114,7 @@ func ConfigMapGet() {
 
 	item = &apiv1.ConfigMap{}
 	json.Unmarshal(raw, &item)
-	_, err = cm.ConfigMapGet(Clientset, namespace, item.Name)
+	_, err = cm.ConfigMapGet(Clientset, elkconfig.Org, item.Name)
 
 	if err != nil {
 		log.Error("Failed to Get Logstash ConfigMap")
@@ -123,7 +123,7 @@ func ConfigMapGet() {
 	}
 }
 
-func PVCGet() {
+func PVCGet(elkconfig *ElkConfig) {
 	var org = Elkconfig.Org
 
 	raw := GetConfig("./base/pvclaim-data.json", org)
@@ -132,7 +132,7 @@ func PVCGet() {
 	var err error
 
 	json.Unmarshal(raw, &item)
-	item, err = pvc.PVCGet(Clientset, namespace, item.Name)
+	item, err = pvc.PVCGet(Clientset, elkconfig.Org, item.Name)
 
 	if err != nil {
 		log.Error("Failed to Get PVClaim-Data")
@@ -145,7 +145,7 @@ func PVCGet() {
 	item = &apiv1.PersistentVolumeClaim{}
 
 	json.Unmarshal(raw, &item)
-	_, err = pvc.PVCGet(Clientset, namespace, item.Name)
+	_, err = pvc.PVCGet(Clientset, elkconfig.Org, item.Name)
 
 	if err != nil {
 		log.Error("Failed to Get PVClaim-logs")
@@ -158,7 +158,7 @@ func PVCGet() {
 	item = &apiv1.PersistentVolumeClaim{}
 
 	json.Unmarshal(raw, &item)
-	_, err = pvc.PVCGet(Clientset, namespace, item.Name)
+	_, err = pvc.PVCGet(Clientset, elkconfig.Org, item.Name)
 
 	if err != nil {
 		log.Error("Failed to Get PVClaim-org")
@@ -168,12 +168,10 @@ func PVCGet() {
 
 }
 
-func ElkGet(_namespace string, elconf *ElkConfig) (*Elk, error) {
-	namespace = _namespace
-	Elkconfig = elconf
-	var elkRoot = newElk(Elkconfig.Org)
-	svcs, _ := ServicesList()
-	deploys, _ := DeployList()
+func ElkGet(elkconfig *ElkConfig) (*Elk, error) {
+	var elkRoot = newElk(elkconfig.Org)
+	svcs, _ := ServicesList(elkconfig)
+	deploys, _ := DeployList(elkconfig)
 	elkRoot.KibanaUrl = "http://localhost"
 	elkRoot.LogUrl = "http://localhost"
 

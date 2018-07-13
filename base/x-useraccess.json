@@ -1,0 +1,12 @@
+{
+  "apiVersion": "v1",
+  "data": {
+    "auth":"Zm9vOiRhcHIxJDFZYTZRaGcwJGRkcmdZZmpzc1VEZzdZanY5ZEllYy4K"
+  },
+  "kind": "Secret",
+  "metadata": {
+    "name": "basic-auth",
+    "namespace": "$ORG"
+  },
+  "type": "Opaque"
+}
