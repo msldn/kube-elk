@@ -38,9 +38,9 @@
             ],
             "args": [
               "-c",
-              "env; ls -la /usr/share/logstash/pipeline; logstash -r -f /usr/share/logstash/pipeline/logstash.conf"
+              "ls -la /usr/share/logstash/pipeline; logstash -r -f /usr/share/logstash/pipeline/logstash.conf"
             ],
-            "image": "docker.elastic.co/logstash/logstash:6.3.1",
+            "image": "docker.elastic.co/logstash/logstash-oss:6.3.1",
             "name": "logstash",
             "ports": [
               {
@@ -48,14 +48,21 @@
               }
             ],
             "resources": {
-            },
-            "volumeMounts": [
-              {
-                "name": "config",
-                "mountPath": "/usr/share/logstash/pipeline"
-              }
-            ]
-          }
+              "limits": {
+                "cpu": "300m",
+                "memory": "1000Mi"
+              },
+              "requests": {
+                "cpu": "50m",
+                "memory": "700Mi"
+              }},
+              "volumeMounts": [
+                {
+                  "name": "config",
+                  "mountPath": "/usr/share/logstash/pipeline"
+                }
+              ]
+            }
         ],
         "volumes": [
           {
@@ -73,7 +80,5 @@
         ]
       }
     }
-  },
-  "status": {
   }
 }

@@ -34,7 +34,7 @@
       "spec": {
         "containers": [
           {
-            "image": "docker.elastic.co/kibana/kibana:6.3.1",
+            "image": "docker.elastic.co/kibana/kibana-oss:6.3.1",
             "name": "kibana",
             "env": [
               {
@@ -56,13 +56,21 @@
               }
             ],
             "resources": {
-            },
-            "volumeMounts": [
-              {
-                "name": "config",
-                "mountPath": "/usr/share/kibana/config"
-              }
-            ]
+              "limits": {
+                "cpu": "500m",
+                "memory": "1000Mi"
+              },
+              "requests": {
+                "cpu": "100m",
+                "memory": "600Mi"
+              },
+              "volumeMounts": [
+                {
+                  "name": "config",
+                  "mountPath": "/usr/share/kibana/config"
+                }
+              ]
+            }
           }
         ],
         "volumes": [
@@ -82,7 +90,5 @@
         "restartPolicy": "Always"
       }
     }
-  },
-  "status": {
   }
 }

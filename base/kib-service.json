@@ -14,8 +14,7 @@
       {
         "name": "5601",
         "port": 5601,
-        "targetPort": 5601,
-        "nodePort": 31525
+        "targetPort": 5601
       }
     ],
     "selector": {

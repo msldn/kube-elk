@@ -21,7 +21,7 @@
             "env": [
               {
                 "name": "HTPASSWD",
-                "value": "foo:$apr1$odHl5EJN$KbxMfo86Qdve2FH4owePn."
+                "value": "user:$apr1$yu2UgqnZ$22er8g6A1GOi.D0nvPNGf0"
               },{
                 "name": "FORWARD_PORT",
                 "value": "5601"

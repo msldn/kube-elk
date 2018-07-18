@@ -9,6 +9,6 @@
     }
   },
   "data": {
-    "logstash.conf": "input {\n  http {\n    port => 8080\n  }\n}\n\noutput {\n  elasticsearch {\n    hosts => \"elasticsearch:9200\"\n  }\n}"
+    "logstash.conf": "input {\n  http {\n    port => 8080\n  }\n}\n filter { mutate { remove_field => [ \"headers\" ] } }\n output {\n  elasticsearch {\n    hosts => \"elasticsearch:9200\"\n  }\n}"
   }
 }
