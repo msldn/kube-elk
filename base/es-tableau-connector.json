@@ -1,0 +1,60 @@
+{
+  "apiVersion": "extensions/v1beta1",
+  "kind": "Deployment",
+  "metadata": {
+    "creationTimestamp": null,
+    "name": "c1",
+    "labels": {
+      "name": "es-connector",
+      "org": "$ORG",
+      "instance": "c1"
+    }
+  },
+  "spec": {
+    "replicas": 1,
+    "strategy": {
+      "type": "Recreate"
+    },
+    "selector": {
+      "matchLabels": {
+        "name": "es-connector",
+        "org": "$ORG",
+        "instance": "c1"
+      }
+    },
+    "template": {
+      "metadata": {
+        "creationTimestamp": null,
+        "labels": {
+          "name": "es-connector",
+          "org": "$ORG",
+          "instance": "c1"
+        }
+      },
+      "spec": {
+        "containers": [
+          {
+            "image": "marek5050/elasticsearch-tableau-connector",
+            "name": "es-connector",
+            "ports": [
+              {
+                "containerPort": 3000
+              }
+            ],
+            "resources": {
+              "limits": {
+                "cpu": "300m",
+                "memory": "300Mi"
+              },
+              "requests": {
+                "cpu": "200m",
+                "memory": "100Mi"
+              }
+            }
+          }
+        ],
+        "restartPolicy": "Always"
+      }
+    }
+  }
+}

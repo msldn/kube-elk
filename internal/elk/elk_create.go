@@ -201,31 +201,31 @@ func PVCCreate(elkconfig *ElkConfig) {
 		log.Info("PVC:Data: Create")
 	}
 
-	raw = GetConfig("./base/pvclaim-logs.json", org)
-
-	item = &apiv1.PersistentVolumeClaim{}
-
-	json.Unmarshal(raw, &item)
-	_, err = pvc.PVCCreate(Clientset, elkconfig.Org, item)
-
-	if err != nil {
-		log.Error("Failed to Create PVClaim-Logs")
-	} else {
-		log.Info("PVC:Logs: Create")
-	}
-
-	raw = GetConfig("./base/pvclaim-org.json", org)
-
-	item = &apiv1.PersistentVolumeClaim{}
-
-	json.Unmarshal(raw, &item)
-	_, err = pvc.PVCCreate(Clientset, elkconfig.Org, item)
-
-	if err != nil {
-		log.Error("Failed to Create PVClaim-Org")
-	} else {
-		log.Info("PVC:Org: Create")
-	}
+	//raw = GetConfig("./base/pvclaim-logs.json", org)
+	//
+	//item = &apiv1.PersistentVolumeClaim{}
+	//
+	//json.Unmarshal(raw, &item)
+	//_, err = pvc.PVCCreate(Clientset, elkconfig.Org, item)
+	//
+	//if err != nil {
+	//	log.Error("Failed to Create PVClaim-Logs")
+	//} else {
+	//	log.Info("PVC:Logs: Create")
+	//}
+	//
+	//raw = GetConfig("./base/pvclaim-org.json", org)
+	//
+	//item = &apiv1.PersistentVolumeClaim{}
+	//
+	//json.Unmarshal(raw, &item)
+	//_, err = pvc.PVCCreate(Clientset, elkconfig.Org, item)
+	//
+	//if err != nil {
+	//	log.Error("Failed to Create PVClaim-Org")
+	//} else {
+	//	log.Info("PVC:Org: Create")
+	//}
 }
 
 func PVCreate(elkconfig *ElkConfig) {
@@ -282,7 +282,7 @@ func UserCreate(elkconfig *ElkConfig) {
 func ElkCreate(elkconfig *ElkConfig) error {
 	CreateNamespace(elkconfig)
 	ConfigMapCreate(elkconfig)
-	PVCreate(elkconfig)
+	//PVCreate(elkconfig)
 	PVCCreate(elkconfig)
 	DeploymentCreate(elkconfig)
 	ServicesCreate(elkconfig)

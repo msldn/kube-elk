@@ -45,15 +45,28 @@
               },
               {
                 "name": "path.repo",
-                "value": "/usr/share/elasticsearch/backup"
+                "value": "/usr/share/nfs/backup"
+              },{
+                "name": "path.data",
+                "value": "/usr/share/nfs/data"
+              },{
+                "name": "path.logs",
+                "value": "/usr/share/nfs/logs"
+              },{
+                "name": "http.cors.enabled",
+                "value": "true"
+
+              },{
+                "name": "http.cors.allow-origin",
+                "value": "*"
               }
             ],
-            "image": "docker.elastic.co/elasticsearch/elasticsearch-oss:6.3.1",
+            "image": "docker.elastic.co/elasticsearch/elasticsearch:6.3.1",
             "name": "elasticsearch",
             "volumeMounts": [
               {
                 "name": "nfsvol-data",
-                "mountPath": "/usr/share/elasticsearch/backup"
+                "mountPath": "/usr/share/nfs"
               }
             ],
             "ports": [
@@ -63,8 +76,8 @@
             ],
             "resources": {
               "limits": {
-                "cpu": "1000m",
-                "memory": "2000Mi"
+                "cpu": "3000m",
+                "memory": "4000Mi"
               },
               "requests": {
                 "cpu": "400m",
@@ -76,7 +89,9 @@
         "volumes": [
           {
             "name": "nfsvol-data",
-            "emptyDir": {}
+            "persistentVolumeClaim": {
+              "claimName": "nfsvol-data"
+            }
           }
         ],
         "restartPolicy": "Always"
