@@ -65,7 +65,7 @@
             "name": "elasticsearch",
             "volumeMounts": [
               {
-                "name": "nfsvol-data",
+                "name": "nfs-claim1-$ORG",
                 "mountPath": "/usr/share/nfs"
               }
             ],
@@ -88,9 +88,9 @@
         ],
         "volumes": [
           {
-            "name": "nfsvol-data",
+            "name": "nfs-claim1-$ORG",
             "persistentVolumeClaim": {
-              "claimName": "nfsvol-data"
+              "claimName": "nfs-claim1-$ORG"
             }
           }
         ],

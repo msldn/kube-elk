@@ -3,9 +3,6 @@
   "kind": "PersistentVolumeClaim",
   "metadata": {
     "name": "nfs-claim1-$ORG",
-    "annotations":{
-      "volume.beta.kubernetes.io/storage-class":"ibmc-block-bronze"
-    },
     "labels": {
       "org": "$ORG",
       "billingType":"hourly",
@@ -19,7 +16,7 @@
     ],
     "resources": {
       "requests": {
-        "storage": "20Gi"
+        "storage": "8Gi"
       }
     }
   }
